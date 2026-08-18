@@ -6,7 +6,11 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
+import { WorkflowSteps } from './components/WorkflowSteps';
+import { ServicesSection } from './components/ServicesSection';
 import { ProjectsSection } from './components/ProjectsSection';
+import { WhyUsSection } from './components/WhyUsSection';
+import { AboutSection } from './components/AboutSection';
 import { SkillsSection } from './components/SkillsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
@@ -16,8 +20,8 @@ import { personaPresets, vertexDigitalData } from './data/defaultPortfolio';
 import { PersonaPresetKey, PortfolioData } from './types';
 import { LanguageProvider } from './context/LanguageContext';
 
-const STORAGE_KEY_DATA = 'vertex_digital_portfolio_custom_data_v2';
-const STORAGE_KEY_PRESET = 'vertex_digital_portfolio_selected_preset_v2';
+const STORAGE_KEY_DATA = 'vertex_digital_portfolio_custom_data_v3';
+const STORAGE_KEY_PRESET = 'vertex_digital_portfolio_selected_preset_v3';
 
 function PortfolioApp() {
   const [currentPresetId, setCurrentPresetId] = useState<PersonaPresetKey>(() => {
@@ -77,6 +81,30 @@ function PortfolioApp() {
     }
   };
 
+  // Handle uploaded video for a project
+  const handleUpdateProjectVideo = (projectId: string, videoUrl: string, fileName: string) => {
+    setPortfolioData((prev) => {
+      const updatedProjects = prev.projects.map((proj) => {
+        if (proj.id === projectId) {
+          return {
+            ...proj,
+            videoUrl,
+            videoDuration: 'REC',
+            isScreenRecording: true
+          };
+        }
+        return proj;
+      });
+      const updatedData = { ...prev, projects: updatedProjects };
+      try {
+        localStorage.setItem(STORAGE_KEY_DATA, JSON.stringify(updatedData));
+      } catch (e) {
+        console.warn("Could not persist blob URL to localStorage", e);
+      }
+      return updatedData;
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#020203] text-zinc-100 selection:bg-white selection:text-black flex flex-col font-sans relative overflow-x-hidden">
       
@@ -91,9 +119,6 @@ function PortfolioApp() {
       {/* Navigation Header */}
       <Navbar
         profile={portfolioData.profile}
-        presets={personaPresets}
-        currentPresetId={currentPresetId}
-        onSelectPreset={handleSelectPreset}
         onOpenCustomizer={() => setCustomizerOpen(true)}
         onOpenResume={() => setResumeOpen(true)}
         onResetToDefault={handleResetToDefault}
@@ -101,22 +126,39 @@ function PortfolioApp() {
 
       {/* Main Content Sections */}
       <main className="flex-1 relative z-10">
+        {/* 1. Hero Showcase */}
         <HeroSection
           profile={portfolioData.profile}
           onOpenResume={() => setResumeOpen(true)}
         />
 
+        {/* 2. Step Workflow: View Demos -> Choose Design -> Request Website */}
+        <WorkflowSteps />
+
+        {/* 3. Services Section */}
+        <ServicesSection />
+
+        {/* 4. Portfolio Projects (Websites with Screen Recording Videos, Commercial Posters, Branding) */}
         <ProjectsSection
           projects={portfolioData.projects}
           activeSkillFilter={activeSkillFilter}
           onClearSkillFilter={() => setActiveSkillFilter(null)}
+          onUpdateProjectVideo={handleUpdateProjectVideo}
         />
 
+        {/* 5. Why Choose Vertex Digital */}
+        <WhyUsSection />
+
+        {/* 6. About Studio Profile */}
+        <AboutSection />
+
+        {/* 7. Skills & Tech Stack */}
         <SkillsSection
           skills={portfolioData.skills}
           onSelectSkillForFilter={handleSelectSkillForFilter}
         />
 
+        {/* 8. Contact & Website Request Form */}
         <ContactSection
           profile={portfolioData.profile}
         />

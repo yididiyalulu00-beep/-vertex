@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { motion } from 'motion/react';
 import { 
   FolderGit2, 
@@ -12,42 +12,88 @@ import {
   Palette,
   Image as ImageIcon,
   Globe,
-  Maximize2
+  Maximize2,
+  Play,
+  Video as VideoIcon,
+  Upload,
+  Clock,
+  Film,
+  Monitor
 } from 'lucide-react';
 import { Project, ProjectCategory } from '../types';
 import { ProjectModal } from './ProjectModal';
+import { VideoPlayerModal } from './VideoPlayerModal';
 import { useLanguage } from '../context/LanguageContext';
 
 interface ProjectsSectionProps {
   projects: Project[];
   activeSkillFilter?: string | null;
   onClearSkillFilter?: () => void;
+  onUpdateProjectVideo?: (projectId: string, videoUrl: string, fileName: string) => void;
 }
 
-const CATEGORIES: { key: ProjectCategory; en: string; am: string; icon: any }[] = [
+const CATEGORIES: { key: ProjectCategory; en: string; am: string; icon: React.ElementType }[] = [
   { key: 'All', en: 'All Works', am: 'ሁሉም ስራዎች', icon: FolderGit2 },
-  { key: 'Websites', en: 'Websites & Apps', am: 'ድረ-ገጾች', icon: Globe },
-  { key: 'Posters & Graphics', en: 'Posters & Graphics', am: 'ፖስተሮች እና ግራፊክስ', icon: ImageIcon },
-  { key: 'Branding', en: 'Branding', am: 'ብራንዲንግ', icon: Palette }
+  { key: 'Websites', en: 'Websites', am: 'ድረ-ገጾች', icon: Globe },
+  { key: 'Graphic Design', en: 'Graphic Design & Posters', am: 'ግራፊክ ዲዛይን እና ፖስተሮች', icon: ImageIcon },
+  { key: 'Branding', en: 'Branding', am: 'ብራንዲንግ', icon: Palette },
+  { key: 'Video', en: 'Video & Demos', am: 'ቪዲዮ ማሳያዎች', icon: VideoIcon }
 ];
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   projects,
   activeSkillFilter,
-  onClearSkillFilter
+  onClearSkillFilter,
+  onUpdateProjectVideo
 }) => {
   const { t, isAmharic } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('All');
+  const [selectedPosterSub, setSelectedPosterSub] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProjectForModal, setSelectedProjectForModal] = useState<Project | null>(null);
+  const [selectedProjectForVideo, setSelectedProjectForVideo] = useState<Project | null>(null);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [dragOverProjectId, setDragOverProjectId] = useState<string | null>(null);
 
-  // Filter projects by category, search query, and external skill filter
+  const hiddenFileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadTargetProjectId, setUploadTargetProjectId] = useState<string | null>(null);
+
+  const posterSubcategories = [
+    { key: 'All', en: 'All Posters (11)', am: 'ሁሉም ፖስተሮች (11)' },
+    { key: 'Food', en: 'Food & Dining (5)', am: 'ምግብ እና ሬስቶራንት (5)' },
+    { key: 'Nightlife', en: 'Nightlife & Events (1)', am: 'ክለብ እና ዝግጅቶች (1)' },
+    { key: 'Sports', en: 'Sports & Combat (2)', am: 'ስፖርት እና ቦክስ (2)' },
+    { key: 'Products', en: 'Luxury & Retail (3)', am: 'ቅንጦት እና ምርቶች (3)' },
+  ];
+
+  // Helper to check subcategory
+  const matchesPosterSub = (project: Project, sub: string) => {
+    if (sub === 'All') return true;
+    const combined = (project.tags.join(' ') + ' ' + project.title + ' ' + project.id).toLowerCase();
+    if (sub === 'Food') return combined.includes('food') || combined.includes('dessert') || combined.includes('taco') || combined.includes('chicken') || combined.includes('biryani') || combined.includes('coffee');
+    if (sub === 'Nightlife') return combined.includes('party') || combined.includes('club') || combined.includes('nightlife') || combined.includes('dj');
+    if (sub === 'Sports') return combined.includes('fight') || combined.includes('boxing') || combined.includes('combat');
+    if (sub === 'Products') return combined.includes('watch') || combined.includes('energy') || combined.includes('drink') || combined.includes('sneaker') || combined.includes('sale');
+    return true;
+  };
+
+  // Filter projects by category, search query, poster subcategory, and external skill filter
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
       // Category check
-      if (selectedCategory !== 'All' && project.category !== selectedCategory) {
-        return false;
+      if (selectedCategory !== 'All') {
+        if (selectedCategory === 'Video') {
+          if (!project.videoUrl && !project.isScreenRecording) return false;
+        } else if (project.category !== selectedCategory) {
+          return false;
+        }
       }
+
+      // Poster subcategory check
+      if (selectedCategory === 'Graphic Design' && selectedPosterSub !== 'All') {
+        if (!matchesPosterSub(project, selectedPosterSub)) return false;
+      }
+
       // External skill filter check
       if (activeSkillFilter) {
         const matchesSkill = 
@@ -55,6 +101,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           project.tags.some(t => t.toLowerCase().includes(activeSkillFilter.toLowerCase()));
         if (!matchesSkill) return false;
       }
+
       // Search query check
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
@@ -69,7 +116,50 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       }
       return true;
     });
-  }, [projects, selectedCategory, searchQuery, activeSkillFilter]);
+  }, [projects, selectedCategory, selectedPosterSub, searchQuery, activeSkillFilter]);
+
+  const handleOpenVideo = (e: React.MouseEvent, project: Project) => {
+    e.stopPropagation();
+    setSelectedProjectForVideo(project);
+    setIsVideoModalOpen(true);
+  };
+
+  const handleFileDrop = (e: React.DragEvent, projectId: string) => {
+    e.preventDefault();
+    setDragOverProjectId(null);
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      if (file.type.startsWith('video/')) {
+        const videoUrl = URL.createObjectURL(file);
+        if (onUpdateProjectVideo) {
+          onUpdateProjectVideo(projectId, videoUrl, file.name);
+        }
+        // Auto open video
+        const target = projects.find(p => p.id === projectId);
+        if (target) {
+          setSelectedProjectForVideo({ ...target, videoUrl, isScreenRecording: true });
+          setIsVideoModalOpen(true);
+        }
+      }
+    }
+  };
+
+  const handleManualFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0 && uploadTargetProjectId) {
+      const file = files[0];
+      const videoUrl = URL.createObjectURL(file);
+      if (onUpdateProjectVideo) {
+        onUpdateProjectVideo(uploadTargetProjectId, videoUrl, file.name);
+      }
+      const target = projects.find(p => p.id === uploadTargetProjectId);
+      if (target) {
+        setSelectedProjectForVideo({ ...target, videoUrl, isScreenRecording: true });
+        setIsVideoModalOpen(true);
+      }
+    }
+  };
 
   return (
     <section id="projects" className="py-16 md:py-24 border-t border-white/5 relative">
@@ -78,9 +168,15 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 text-left">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] uppercase tracking-widest font-bold text-zinc-400 font-mono">
-              <FolderGit2 className="w-3.5 h-3.5 text-zinc-300" />
-              <span>{t.projectsBadge}</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[10px] uppercase tracking-widest font-bold text-cyan-300 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                <span>Step 01 & 02 • {t.workflowStep1Title} → {t.workflowStep2Title}</span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] uppercase tracking-widest font-bold text-zinc-400 font-mono">
+                <FolderGit2 className="w-3.5 h-3.5 text-zinc-300" />
+                <span>{t.projectsBadge}</span>
+              </div>
             </div>
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
               {t.projectsTitle}
@@ -113,41 +209,89 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         </div>
 
         {/* Category Tabs & Active Skill Filter Pill */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-10 pb-4 border-b border-white/5">
-          
-          <div className="flex flex-wrap items-center gap-2">
-            {CATEGORIES.map((cat) => {
-              const isSelected = selectedCategory === cat.key;
-              const Icon = cat.icon;
-              return (
+        <div className="space-y-4 mb-10 pb-4 border-b border-white/5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              {CATEGORIES.map((cat) => {
+                const isSelected = selectedCategory === cat.key;
+                const Icon = cat.icon;
+                const count = cat.key === 'All' 
+                  ? projects.length 
+                  : cat.key === 'Video'
+                    ? projects.filter(p => p.videoUrl || p.isScreenRecording).length
+                    : projects.filter(p => p.category === cat.key).length;
+
+                return (
+                  <button
+                    key={cat.key}
+                    id={`cat-filter-${cat.key.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                    onClick={() => {
+                      setSelectedCategory(cat.key);
+                      if (cat.key !== 'Graphic Design') {
+                        setSelectedPosterSub('All');
+                      }
+                    }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all ${
+                      isSelected
+                        ? 'bg-white text-black shadow-lg scale-100'
+                        : 'text-zinc-400 hover:text-white bg-zinc-900/40 hover:bg-zinc-800/80 border border-white/5'
+                    }`}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                    <span>{isAmharic ? cat.am : cat.en}</span>
+                    <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${
+                      isSelected ? 'bg-black/20 text-black font-bold' : 'bg-white/10 text-zinc-400'
+                    }`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Active Skill Filter Indicator */}
+            {activeSkillFilter && (
+              <div className="flex items-center gap-2 px-3.5 py-1 bg-white/10 border border-white/20 text-zinc-200 rounded-full text-xs font-mono">
+                <span>Filtering by skill: <strong>{activeSkillFilter}</strong></span>
                 <button
-                  key={cat.key}
-                  id={`cat-filter-${cat.key.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
-                  onClick={() => setSelectedCategory(cat.key)}
-                  className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all ${
-                    isSelected
-                      ? 'bg-white text-black shadow-lg scale-100'
-                      : 'text-zinc-400 hover:text-white bg-zinc-900/40 hover:bg-zinc-800/80 border border-white/5'
-                  }`}
+                  onClick={onClearSkillFilter}
+                  className="p-0.5 hover:bg-white/20 rounded-full transition-colors"
+                  title="Clear filter"
                 >
-                  <Icon className="w-3.5 h-3.5" />
-                  <span>{isAmharic ? cat.am : cat.en}</span>
+                  <X className="w-3.5 h-3.5" />
                 </button>
-              );
-            })}
+              </div>
+            )}
           </div>
 
-          {/* Active Skill Filter Indicator */}
-          {activeSkillFilter && (
-            <div className="flex items-center gap-2 px-3.5 py-1 bg-white/10 border border-white/20 text-zinc-200 rounded-full text-xs font-mono">
-              <span>Filtering by skill: <strong>{activeSkillFilter}</strong></span>
-              <button
-                onClick={onClearSkillFilter}
-                className="p-0.5 hover:bg-white/20 rounded-full transition-colors"
-                title="Clear filter"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
+          {/* Subcategory Pills for Graphic Design / Posters */}
+          {(selectedCategory === 'Graphic Design' || selectedCategory === 'All') && (
+            <div className="flex flex-wrap items-center gap-1.5 pt-2">
+              <span className="text-[11px] font-mono text-zinc-400 mr-1.5 uppercase tracking-wider flex items-center gap-1">
+                <ImageIcon className="w-3 h-3 text-cyan-400" />
+                {isAmharic ? 'የፖስተር አይነቶች:' : 'Poster Themes:'}
+              </span>
+              {posterSubcategories.map((sub) => {
+                const isSubSelected = selectedPosterSub === sub.key;
+                return (
+                  <button
+                    key={sub.key}
+                    onClick={() => {
+                      setSelectedPosterSub(sub.key);
+                      if (selectedCategory !== 'Graphic Design') {
+                        setSelectedCategory('Graphic Design');
+                      }
+                    }}
+                    className={`px-3 py-1 rounded-full text-[11px] font-medium font-mono transition-all ${
+                      isSubSelected && selectedCategory === 'Graphic Design'
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold shadow-sm'
+                        : 'bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-zinc-200 border border-white/5'
+                    }`}
+                  >
+                    {isAmharic ? sub.am : sub.en}
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
@@ -158,8 +302,15 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             {filteredProjects.map((project, index) => {
               const displayTitle = isAmharic && project.titleAm ? project.titleAm : project.title;
               const displayDesc = isAmharic && project.descriptionAm ? project.descriptionAm : project.description;
-              const isPoster = project.category === 'Posters & Graphics';
+              const isGraphicDesign = project.category === 'Graphic Design';
               const isBranding = project.category === 'Branding';
+              const isWebsite = project.category === 'Websites';
+              const isLandscapeBanner = 
+                project.tags.includes('Social Media Banner') || 
+                project.tags.includes('Restaurant Banner') || 
+                project.id.includes('banner');
+              const hasVideo = Boolean(project.videoUrl || project.isScreenRecording);
+              const isDragTarget = dragOverProjectId === project.id;
 
               return (
                 <motion.article
@@ -168,15 +319,31 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: index * 0.08 }}
-                  className="group flex flex-col rounded-3xl bg-zinc-900/40 border border-white/5 hover:border-white/20 backdrop-blur-xl transition-all duration-500 overflow-hidden text-left relative shadow-xl cursor-pointer"
+                  transition={{ duration: 0.35, delay: index * 0.06 }}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setDragOverProjectId(project.id);
+                  }}
+                  onDragLeave={() => setDragOverProjectId(null)}
+                  onDrop={(e) => handleFileDrop(e, project.id)}
+                  className={`group flex flex-col rounded-3xl bg-zinc-900/40 border ${
+                    isDragTarget 
+                      ? 'border-cyan-400 ring-2 ring-cyan-400/40' 
+                      : 'border-white/5 hover:border-white/20'
+                  } backdrop-blur-xl transition-all duration-500 overflow-hidden text-left relative shadow-xl cursor-pointer`}
                   onClick={() => setSelectedProjectForModal(project)}
                 >
                   {/* Atmospheric Glow on Hover */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                   {/* Thumbnail Image Container */}
-                  <div className={`relative ${isPoster ? 'aspect-[3/4]' : 'aspect-[16/10]'} w-full overflow-hidden bg-black/80 flex items-center justify-center`}>
+                  <div className={`relative ${
+                    isLandscapeBanner 
+                      ? 'aspect-[16/9]' 
+                      : isGraphicDesign 
+                        ? 'aspect-[3/4]' 
+                        : 'aspect-[16/10]'
+                  } w-full overflow-hidden bg-black/90 flex items-center justify-center`}>
                     <img
                       src={project.image}
                       alt={project.title}
@@ -188,25 +355,53 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     {/* Top Badges */}
                     <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between z-10">
                       <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold font-mono bg-[#020203]/85 backdrop-blur-md text-zinc-300 border border-white/10 flex items-center gap-1.5">
-                        {isPoster && <ImageIcon className="w-3 h-3 text-zinc-400" />}
+                        {isGraphicDesign && <ImageIcon className="w-3 h-3 text-zinc-400" />}
                         {isBranding && <Palette className="w-3 h-3 text-zinc-400" />}
-                        {!isPoster && !isBranding && <Globe className="w-3 h-3 text-zinc-400" />}
+                        {isWebsite && <Globe className="w-3 h-3 text-cyan-400" />}
                         <span>{project.category}</span>
                       </span>
-                      {project.featured && (
-                        <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/10 backdrop-blur-md text-white border border-white/20">
-                          <Sparkles className="w-3 h-3 text-zinc-200" />
-                          {t.featuredBadge}
-                        </span>
-                      )}
+                      
+                      <div className="flex items-center gap-1.5">
+                        {hasVideo && (
+                          <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/30 backdrop-blur-md animate-pulse">
+                            <Film className="w-3 h-3 text-red-400" />
+                            <span>{project.videoDuration || 'DEMO'}</span>
+                          </span>
+                        )}
+                        {project.featured && (
+                          <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/10 backdrop-blur-md text-white border border-white/20">
+                            <Sparkles className="w-3 h-3 text-zinc-200" />
+                            {t.featuredBadge}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
-                    {/* Quick Preview Icon hover overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-xs z-10">
-                      <span className="px-4 py-2 rounded-full bg-white text-black text-xs font-bold flex items-center gap-1.5 shadow-2xl scale-95 group-hover:scale-100 transition-transform">
+                    {/* Quick Action overlay buttons on hover */}
+                    <div className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/50 backdrop-blur-xs z-10 px-4">
+                      {hasVideo && (
+                        <button
+                          type="button"
+                          onClick={(e) => handleOpenVideo(e, project)}
+                          className="px-4 py-2.5 rounded-full bg-red-600 hover:bg-red-500 text-white text-xs font-bold flex items-center gap-2 shadow-2xl scale-95 group-hover:scale-100 transition-all active:scale-95"
+                          title="Watch screen recording demo"
+                        >
+                          <Play className="w-3.5 h-3.5 fill-current" />
+                          <span>{isAmharic ? 'ቪዲዮ እይ' : 'Watch Demo'}</span>
+                        </button>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProjectForModal(project);
+                        }}
+                        className="px-4 py-2.5 rounded-full bg-white hover:bg-zinc-200 text-black text-xs font-bold flex items-center gap-1.5 shadow-2xl scale-95 group-hover:scale-100 transition-all active:scale-95"
+                      >
                         <Maximize2 className="w-3.5 h-3.5" />
-                        <span>{isPoster ? t.viewPoster : t.viewDetails}</span>
-                      </span>
+                        <span>{isGraphicDesign ? t.viewPoster : t.viewDetails}</span>
+                      </button>
                     </div>
 
                     {/* Metric Chip on bottom of thumbnail */}
@@ -223,7 +418,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   {/* Card Content */}
                   <div className="flex-1 p-6 flex flex-col justify-between space-y-4 relative z-10">
                     <div className="space-y-2">
-                      <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-zinc-100 transition-colors flex items-center justify-between">
+                      <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center justify-between">
                         <span>{displayTitle}</span>
                         <ArrowUpRight className="w-4 h-4 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all text-white flex-shrink-0 ml-2" />
                       </h3>
@@ -253,24 +448,53 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
                       {/* Card Action Links */}
                       <div className="flex items-center justify-between pt-4 border-t border-white/5 text-xs">
-                        <button
-                          type="button"
-                          className="font-bold text-[11px] uppercase tracking-widest text-zinc-300 hover:text-white flex items-center gap-1.5 transition-colors"
-                        >
-                          <span>{t.viewDetails}</span>
-                          <span className="font-mono text-zinc-500">→</span>
-                        </button>
+                        <div className="flex items-center gap-2">
+                          {hasVideo && (
+                            <button
+                              type="button"
+                              onClick={(e) => handleOpenVideo(e, project)}
+                              className="font-bold text-[11px] uppercase tracking-wider text-red-400 hover:text-red-300 flex items-center gap-1.5 transition-colors"
+                            >
+                              <Play className="w-3 h-3 fill-current" />
+                              <span>{isAmharic ? 'ቪዲዮ' : 'Watch Demo'}</span>
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedProjectForModal(project);
+                            }}
+                            className="font-bold text-[11px] uppercase tracking-widest text-zinc-300 hover:text-white flex items-center gap-1.5 transition-colors"
+                          >
+                            <span>{t.viewDetails}</span>
+                            <span className="font-mono text-zinc-500">→</span>
+                          </button>
+                        </div>
 
-                        <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                          {/* Upload video trigger button */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setUploadTargetProjectId(project.id);
+                              hiddenFileInputRef.current?.click();
+                            }}
+                            className="p-1.5 text-zinc-500 hover:text-cyan-400 hover:bg-white/5 rounded-full transition-colors"
+                            title={isAmharic ? 'የስክሪን ቪዲዮ ይጫኑ' : 'Upload custom video recording for this project'}
+                          >
+                            <Upload className="w-3.5 h-3.5" />
+                          </button>
+
                           {project.githubUrl && (
                             <a
                               href={project.githubUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-full transition-colors"
+                              className="p-1.5 text-zinc-400 hover:text-white hover:bg-white/5 rounded-full transition-colors"
                               title="Source code"
                             >
-                              <Github className="w-4 h-4" />
+                              <Github className="w-3.5 h-3.5" />
                             </a>
                           )}
                           {project.liveUrl && (
@@ -278,10 +502,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                               href={project.liveUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-full transition-colors"
+                              className="p-1.5 text-zinc-400 hover:text-white hover:bg-white/5 rounded-full transition-colors"
                               title="Live demo"
                             >
-                              <ExternalLink className="w-4 h-4" />
+                              <ExternalLink className="w-3.5 h-3.5" />
                             </a>
                           )}
                         </div>
@@ -317,10 +541,38 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
       </div>
 
+      {/* Hidden file input for uploading custom video */}
+      <input
+        type="file"
+        ref={hiddenFileInputRef}
+        onChange={handleManualFileUpload}
+        accept="video/mp4,video/webm,video/quicktime"
+        className="hidden"
+      />
+
       {/* Deep-Dive Project Modal */}
       <ProjectModal
         project={selectedProjectForModal}
         onClose={() => setSelectedProjectForModal(null)}
+      />
+
+      {/* Video Demonstration Modal */}
+      <VideoPlayerModal
+        project={selectedProjectForVideo}
+        isOpen={isVideoModalOpen}
+        onClose={() => {
+          setIsVideoModalOpen(false);
+          setSelectedProjectForVideo(null);
+        }}
+        onViewDetails={(proj) => {
+          setIsVideoModalOpen(false);
+          setSelectedProjectForModal(proj);
+        }}
+        onUploadCustomVideo={(projectId, videoUrl, fileName) => {
+          if (onUpdateProjectVideo) {
+            onUpdateProjectVideo(projectId, videoUrl, fileName);
+          }
+        }}
       />
     </section>
   );

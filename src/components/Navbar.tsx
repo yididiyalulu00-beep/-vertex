@@ -37,8 +37,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const navLinks = [
-    { label: t.navAbout, href: "#about" },
+    { label: isAmharic ? 'አገልግሎቶች' : 'Services', href: "#services" },
     { label: t.navProjects, href: "#projects" },
+    { label: isAmharic ? 'ለምን እኛ?' : 'Why Us', href: "#why-us" },
+    { label: t.navAbout, href: "#about" },
     { label: t.navSkills, href: "#skills" },
     { label: t.navContact, href: "#contact" }
   ];

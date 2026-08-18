@@ -39,7 +39,9 @@ export interface TranslationDict {
   filterWebsites: string;
   filterPosters: string;
   filterBranding: string;
+  filterVideo: string;
   viewDetails: string;
+  watchDemo: string;
   launchDemo: string;
   viewPoster: string;
   sourceCode: string;
@@ -128,6 +130,16 @@ export interface TranslationDict {
   resetDefaults: string;
   applyChanges: string;
 
+  // Workflow Steps
+  workflowBadge: string;
+  workflowTitle: string;
+  workflowStep1Title: string;
+  workflowStep1Desc: string;
+  workflowStep2Title: string;
+  workflowStep2Desc: string;
+  workflowStep3Title: string;
+  workflowStep3Desc: string;
+
   // Footer
   footerRights: string;
   footerCrafted: string;
@@ -151,35 +163,37 @@ export const translations: Record<Language, TranslationDict> = {
     // Hero
     heroStudioBadge: 'Vertex Digital Creative Studio',
     heroGreeting: 'Hello, we are',
-    heroHeadline1: 'CRAFTING HIGH-IMPACT',
-    heroHeadlineHighlight: 'WEBSITES & COMMERCIAL POSTERS',
-    heroHeadline2: 'THAT COMMAND ATTENTION',
+    heroHeadline1: 'We Build Digital Experiences',
+    heroHeadlineHighlight: 'That Help Businesses',
+    heroHeadline2: 'Grow.',
     heroSubheadline:
-      'Vertex Digital merges high-end web development, interactive applications, and visually arresting commercial poster design into unforgettable digital and print experiences.',
-    heroViewProjects: 'Explore Selected Works',
+      'Vertex Digital creates modern websites, professional branding, creative designs, and digital solutions for businesses.',
+    heroViewProjects: 'View Our Work',
     heroGetInTouch: 'Start a Project',
-    heroDownloadResume: 'View Resume',
+    heroDownloadResume: 'View CV',
     heroYearsExp: 'Years Exp.',
     heroProjectsDone: 'Projects Shipped',
     heroClientSat: 'Client Satisfaction',
     heroTurnaround: 'Rapid Turnaround',
     heroCoreDisciplines: 'Core Creative Disciplines',
-    heroWebDev: 'Custom Websites & Web Apps',
-    heroBrandDesign: 'Brand Identity & Visual Systems',
-    heroPosterDesign: 'High-Impact Poster & Graphic Design',
+    heroWebDev: 'Website Design & Development',
+    heroBrandDesign: 'Branding & Identity',
+    heroPosterDesign: 'Poster & Graphic Design',
 
     // Projects
-    projectsBadge: 'Curated Portfolio',
-    projectsTitle: 'FEATURED CREATIVE WORKS',
+    projectsBadge: 'Portfolio & Works',
+    projectsTitle: 'OUR RECENT PROJECTS',
     projectsSubtitle:
-      'Explore responsive web platforms, commercial product posters, event prints, and brand design systems delivered with precision.',
-    filterAll: 'All Works',
-    filterWebsites: 'Websites & Apps',
-    filterPosters: 'Posters & Graphics',
+      'Explore responsive web platforms, commercial product posters, and video screen walkthroughs engineered for real client growth.',
+    filterAll: 'All Projects',
+    filterWebsites: 'Websites',
     filterBranding: 'Branding',
-    viewDetails: 'Project Breakdown',
+    filterPosters: 'Graphic Design',
+    filterVideo: 'Video',
+    viewDetails: 'View Project',
+    watchDemo: 'Watch Demo',
     launchDemo: 'Launch Website',
-    viewPoster: 'View Full Poster',
+    viewPoster: 'View Full Size',
     sourceCode: 'Source Code',
     keyCapabilities: 'Key Deliverables & Highlights',
     technicalChallenges: 'Creative & Technical Execution',
@@ -270,6 +284,16 @@ export const translations: Record<Language, TranslationDict> = {
     resetDefaults: 'Reset to Vertex Digital Defaults',
     applyChanges: 'Apply Live Changes',
 
+    // Workflow Steps
+    workflowBadge: 'Simple Client Process',
+    workflowTitle: 'View Demos → Choose a Design → Request Your Website',
+    workflowStep1Title: 'View Demos',
+    workflowStep1Desc: 'Explore live client websites, interactive menu systems, and luxury showroom platforms.',
+    workflowStep2Title: 'Choose a Design',
+    workflowStep2Desc: 'Select your preferred visual aesthetic, bespoke layout, typography, and functional features.',
+    workflowStep3Title: 'Request Your Website',
+    workflowStep3Desc: 'Submit your requirements via our instant direct form or connect immediately on Telegram.',
+
     // Footer
     footerRights: 'All rights reserved.',
     footerCrafted: 'Crafted with precision for Vertex Digital',
@@ -289,35 +313,37 @@ export const translations: Record<Language, TranslationDict> = {
     navBusy: 'በስራ ላይ',
 
     // Hero
-    heroStudioBadge: 'ቨርቴክስ ዲጂታል (Vertex Digital)',
-    heroGreeting: 'እንኳን ደህና መጡ፣ እኛ',
-    heroHeadline1: 'ማራኪ ድረ-ገጾች እና',
-    heroHeadlineHighlight: 'የንግድ ፖስተር ዲዛይን',
-    heroHeadline2: 'በከፍተኛ ጥራት እንሰራለን',
+    heroStudioBadge: 'Vertex Digital Creative Studio',
+    heroGreeting: 'ሰላም፣ እኛ',
+    heroHeadline1: 'ለንግድዎ እድገት የሚረዱ',
+    heroHeadlineHighlight: 'ዲጂታል ተሞክሮዎችን',
+    heroHeadline2: 'እንገነባለን።',
     heroSubheadline:
-      'ቨርቴክስ ዲጂታል (Vertex Digital) ፈጠራ የታከለባቸውን ዘመናዊ ድረ-ገጾች እና ዓይን የሚስቡ የንግድ ፖስተሮችን በልዩ ጥራት ያቀርባል።',
+      'ቬርቴክስ ዲጂታል (Vertex Digital) ለንግድ ድርጅቶች ዘመናዊ ድረ-ገጾችን፣ ፕሮፌሽናል ብራንዲንግን፣ ፈጠራ የታከለባቸውን ዲዛይኖች እና ዲጂታል መፍትሄዎችን ያዘጋጃል።',
     heroViewProjects: 'የተሰሩ ስራዎችን ይመልከቱ',
-    heroGetInTouch: 'አሁኑኑ ይዘዙ',
+    heroGetInTouch: 'ፕሮጀክት ይጀምሩ',
     heroDownloadResume: 'ሬዙሜ ይመልከቱ',
     heroYearsExp: 'የልምድ ዓመታት',
     heroProjectsDone: 'የተጠናቀቁ ስራዎች',
     heroClientSat: 'የደንበኞች እርካታ',
     heroTurnaround: 'ፈጣን ርክክብ',
     heroCoreDisciplines: 'ዋና ዋና የፈጠራ ዘርፎች',
-    heroWebDev: 'ዘመናዊ ድረ-ገጾች እና ዌብ አፕሊኬሽኖች',
-    heroBrandDesign: 'የብራንድ መለያ እና ግራፊክ ዲዛይን',
-    heroPosterDesign: 'ዓይን ሳቢ የንግድ እና የምርት ፖስተሮች',
+    heroWebDev: 'የድረ-ገጽ ዲዛይን እና ልማት',
+    heroBrandDesign: 'የብራንድ መለያ እና ሎጎ',
+    heroPosterDesign: 'የፖስተር እና ግራፊክ ዲዛይን',
 
     // Projects
     projectsBadge: 'የተመረጡ ስራዎች',
-    projectsTitle: 'የቨርቴክስ ዲጂታል ስራዎች',
+    projectsTitle: 'የቅርብ ጊዜ ፕሮጀክቶች',
     projectsSubtitle:
-      'ለደንበኞቻችን የሰራናቸውን ድረ-ገጾች፣ የቅንጦት ሰዓት ማስታወቂያ፣ የቦክስ አካዳሚ እና የቡና መሸጫ ፖስተሮችን ይመልከቱ።',
+      'ለደንበኞቻችን የሰራናቸውን ድረ-ገጾች፣ የንግድ ማስታወቂያ ፖስተሮች እና የቪዲዮ ማሳያዎችን ይመልከቱ።',
     filterAll: 'ሁሉም ስራዎች',
-    filterWebsites: 'ድረ-ገጾች',
-    filterPosters: 'ፖስተሮች እና ግራፊክስ',
-    filterBranding: 'ብራንዲንግ',
-    viewDetails: 'ዝርዝሩን ይመልከቱ',
+    filterWebsites: 'ድረ-ገጾች (Websites)',
+    filterBranding: 'ብራንዲንግ (Branding)',
+    filterPosters: 'ግራፊክ ዲዛይን (Graphic Design)',
+    filterVideo: 'ቪዲዮ (Video)',
+    viewDetails: 'ፕሮጀክቱን እይ',
+    watchDemo: 'ቪዲዮ ማሳያ ይመልከቱ',
     launchDemo: 'ድረ-ገጹን ክፈት',
     viewPoster: 'ሙሉ ፖስተሩን እይ',
     sourceCode: 'የኮድ መረጃ',
@@ -409,6 +435,16 @@ export const translations: Record<Language, TranslationDict> = {
     locationLabel: 'አድራሻ',
     resetDefaults: 'ወደ መጀመሪያው መልስ',
     applyChanges: 'ለውጦችን አረጋግጥ',
+
+    // Workflow Steps
+    workflowBadge: 'ቀላል የ 3 ደረጃ አሰራር',
+    workflowTitle: 'ዲሞዎችን ይመልከቱ → ዲዛይን ይምረጡ → የራስዎን ድረ-ገጽ ይጠይቁ',
+    workflowStep1Title: 'ዲሞዎችን ይመልከቱ',
+    workflowStep1Desc: 'የተሰሩ የቀጥታ ድረ-ገጾችን (ስማሽ በርገርስ፣ ደሉክስ ፈርኒቸር) እና የተሟሉ ዲሞዎችን ይመልከቱ።',
+    workflowStep2Title: 'ዲዛይን ይምረጡ',
+    workflowStep2Desc: 'ለስራዎ ወይም ለንግድዎ የሚስማማውን ዘመናዊ ዲዛይን፣ ቅርጽ እና የገጽታ ዝርዝር ይምረጡ።',
+    workflowStep3Title: 'የራስዎን ድረ-ገጽ ይጠይቁ',
+    workflowStep3Desc: 'ፍላጎትዎን በቅጹ ይላኩ ወይም በቴሌግራም (@vertexdigital00) በቀጥታ በማናገር ስራ ይጀምሩ።',
 
     // Footer
     footerRights: 'መብቱ በህግ የተጠበቀ ነው።',

@@ -13,7 +13,10 @@ import {
   Palette,
   Image as ImageIcon,
   Globe,
-  Clock
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles
 } from 'lucide-react';
 import { Profile } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -23,9 +26,91 @@ interface HeroSectionProps {
   onOpenResume: () => void;
 }
 
+const ALL_HERO_POSTERS = [
+  {
+    id: 'ice-cream',
+    title: "Today's Special Ice Cream",
+    tag: '$4.50 Sundae',
+    image: '/src/assets/images/ice_cream_poster_ad_1786839346903.jpg',
+    badgeColor: 'text-amber-300 border-amber-400/30 bg-amber-400/10'
+  },
+  {
+    id: 'taco-tuesday',
+    title: 'Taco Tuesday Deals',
+    tag: 'Crisp Mexican Tacos',
+    image: '/src/assets/images/taco_tuesday_ad_1786839360625.jpg',
+    badgeColor: 'text-orange-300 border-orange-400/30 bg-orange-400/10'
+  },
+  {
+    id: 'roasted-chicken',
+    title: 'Special Delicious Food Menu',
+    tag: 'Whole Roasted Chicken',
+    image: '/src/assets/images/roasted_chicken_ad_1786839371750.jpg',
+    badgeColor: 'text-yellow-300 border-yellow-400/30 bg-yellow-400/10'
+  },
+  {
+    id: 'chicken-biryani',
+    title: 'Moon Light Chicken Biryani',
+    tag: '25% OFF Promo',
+    image: '/src/assets/images/chicken_biryani_ad_1786839383779.jpg',
+    badgeColor: 'text-red-300 border-red-400/30 bg-red-400/10'
+  },
+  {
+    id: 'saturday-club',
+    title: 'Saturday Night Party',
+    tag: 'DJ Nalita & DJ Canvas',
+    image: '/src/assets/images/saturday_club_night_ad_1786839398468.jpg',
+    badgeColor: 'text-pink-300 border-pink-400/30 bg-pink-400/10'
+  },
+  {
+    id: 'fight-night',
+    title: 'Fight Night Championship',
+    tag: '$50 Ticket Match',
+    image: '/src/assets/images/fight_night_poster_ad_1786839410287.jpg',
+    badgeColor: 'text-amber-300 border-amber-400/30 bg-amber-400/10'
+  },
+  {
+    id: 'boxing-day',
+    title: 'Boxing Day Offer',
+    tag: 'Up to 50% OFF',
+    image: '/src/assets/images/boxing_day_sale_poster_1786839421601.jpg',
+    badgeColor: 'text-blue-300 border-blue-400/30 bg-blue-400/10'
+  },
+  {
+    id: 'luxury-watch',
+    title: 'THEPROTECH Gold Edition',
+    tag: 'Luxury Timepiece',
+    image: '/src/assets/images/luxury_watch_poster_1786664988875.jpg',
+    badgeColor: 'text-amber-300 border-amber-400/30 bg-amber-400/10'
+  },
+  {
+    id: 'coffee-time',
+    title: 'Coffee Time Mornings',
+    tag: 'Artisanal Roasts',
+    image: '/src/assets/images/coffee_ad_poster_1786665000132.jpg',
+    badgeColor: 'text-orange-300 border-orange-400/30 bg-orange-400/10'
+  },
+  {
+    id: 'energy-drink',
+    title: 'Spark Hyper-Fuel',
+    tag: 'Energy Drink Ad',
+    image: '/src/assets/images/energy_drink_poster_1786665011681.jpg',
+    badgeColor: 'text-cyan-300 border-cyan-400/30 bg-cyan-400/10'
+  },
+  {
+    id: 'neon-sneaker',
+    title: 'Neon Velocity Cyber-Sole',
+    tag: 'Performance Footwear',
+    image: '/src/assets/images/sneaker_poster_1786665023901.jpg',
+    badgeColor: 'text-emerald-300 border-emerald-400/30 bg-emerald-400/10'
+  }
+];
+
 export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume }) => {
   const { t, isAmharic } = useLanguage();
   const [roleIndex, setRoleIndex] = useState(0);
+  const [bentoTab, setBentoTab] = useState<'posters' | 'websites'>('posters');
+  const [activePosterIdx, setActivePosterIdx] = useState(0);
 
   const activeRoleTags = isAmharic && profile.roleTagsAm && profile.roleTagsAm.length > 0 
     ? profile.roleTagsAm 
@@ -38,6 +123,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume 
     }, 2800);
     return () => clearInterval(interval);
   }, [activeRoleTags]);
+
+  // Auto-cycle posters slowly in bento if in posters tab
+  useEffect(() => {
+    if (bentoTab !== 'posters') return;
+    const timer = setInterval(() => {
+      setActivePosterIdx((prev) => (prev + 1) % ALL_HERO_POSTERS.length);
+    }, 3800);
+    return () => clearInterval(timer);
+  }, [bentoTab]);
 
   const metrics = [
     { label: t.heroYearsExp, value: `${profile.yearsOfExperience}+`, icon: Briefcase },
@@ -166,6 +260,30 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume 
               </button>
             </div>
 
+            {/* Ordered 3-Step Process Flow Strip */}
+            <div className="pt-2">
+              <a 
+                href="#workflow-process" 
+                id="hero-workflow-flow-strip"
+                className="inline-flex items-center flex-wrap gap-2 px-4 py-2 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 border border-white/10 text-[11px] sm:text-xs font-semibold text-zinc-300 transition-colors shadow-lg group"
+              >
+                <span className="text-cyan-400 font-mono flex items-center gap-1 font-bold">
+                  <span>01</span>
+                  <span>View Demos</span>
+                </span>
+                <span className="text-zinc-500 font-mono">→</span>
+                <span className="text-purple-300 font-mono flex items-center gap-1 font-bold">
+                  <span>02</span>
+                  <span>Choose a Design</span>
+                </span>
+                <span className="text-zinc-500 font-mono">→</span>
+                <span className="text-emerald-400 font-mono flex items-center gap-1 font-bold">
+                  <span>03</span>
+                  <span>Request Your Website</span>
+                </span>
+              </a>
+            </div>
+
           </div>
 
           {/* Right Column: Immersive Showcase Preview Bento */}
@@ -177,60 +295,191 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume 
 
               <div className="bg-zinc-900/60 border border-white/10 group-hover:border-white/20 rounded-3xl p-4 sm:p-5 flex flex-col justify-between backdrop-blur-2xl relative overflow-hidden transition-all duration-500 shadow-2xl space-y-4">
                 
-                {/* Header Badge */}
+                {/* Header Badge & Tab Switcher */}
                 <div className="flex items-center justify-between z-10">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg overflow-hidden border border-white/20 bg-black flex items-center justify-center shadow-md">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg overflow-hidden border border-white/20 bg-black flex items-center justify-center shadow-md flex-shrink-0">
                       <img 
                         src="/src/assets/images/vertex_official_logo_1786667457174.jpg" 
                         alt="Vertex Digital" 
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <span className="text-xs font-bold text-white tracking-tight">Vertex Digital</span>
-                  </div>
-                  <span className="text-[10px] uppercase tracking-widest text-zinc-400 font-bold bg-white/5 px-2.5 py-1 rounded-full border border-white/5 font-mono">
-                    Creative Studio
-                  </span>
-                </div>
-
-                {/* Poster showcase mini gallery */}
-                <div className="grid grid-cols-2 gap-2.5">
-                  <div className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/10 group/poster bg-black">
-                    <img 
-                      src="/src/assets/images/luxury_watch_poster_1786664988875.jpg" 
-                      alt="THEPROTECH Luxury Watch Poster" 
-                      className="w-full h-full object-cover group-hover/poster:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute bottom-0 inset-x-0 p-2 bg-gradient-to-t from-black via-black/80 to-transparent">
-                      <span className="text-[10px] font-bold text-amber-200 block truncate">THEPROTECH Gold Watch</span>
-                      <span className="text-[9px] text-zinc-400 font-mono">Product Poster</span>
-                    </div>
+                    <span className="text-xs font-bold text-white tracking-tight">Studio Showcase</span>
                   </div>
 
-                  <div className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/10 group/poster bg-black">
-                    <img 
-                      src="/src/assets/images/coffee_ad_poster_1786665000132.jpg" 
-                      alt="Coffee Time Mornings Poster" 
-                      className="w-full h-full object-cover group-hover/poster:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute bottom-0 inset-x-0 p-2 bg-gradient-to-t from-black via-black/80 to-transparent">
-                      <span className="text-[10px] font-bold text-orange-200 block truncate">Coffee Time Mornings</span>
-                      <span className="text-[9px] text-zinc-400 font-mono">Commercial Ad</span>
-                    </div>
+                  {/* Tab Selector */}
+                  <div className="flex items-center bg-black/70 p-0.5 rounded-full border border-white/10 text-[10px] font-mono">
+                    <button
+                      onClick={() => setBentoTab('posters')}
+                      className={`px-2.5 py-1 rounded-full font-bold transition-all ${
+                        bentoTab === 'posters'
+                          ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      Posters (11)
+                    </button>
+                    <button
+                      onClick={() => setBentoTab('websites')}
+                      className={`px-2.5 py-1 rounded-full font-bold transition-all ${
+                        bentoTab === 'websites'
+                          ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      Websites (2)
+                    </button>
                   </div>
                 </div>
 
-                {/* Website & Poster Highlights strip */}
-                <div className="p-3 rounded-2xl bg-black/60 border border-white/5 space-y-1.5 text-left">
+                {/* Tab 1: Commercial Posters Interactive Showcase */}
+                {bentoTab === 'posters' ? (
+                  <div className="space-y-3">
+                    {/* Active Poster Large Preview */}
+                    <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden border border-white/15 bg-black shadow-2xl group/activeposter">
+                      <img 
+                        src={ALL_HERO_POSTERS[activePosterIdx].image} 
+                        alt={ALL_HERO_POSTERS[activePosterIdx].title} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover/activeposter:scale-105"
+                      />
+                      
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col justify-between p-3">
+                        {/* Top Indicator */}
+                        <div className="flex items-center justify-between">
+                          <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border ${ALL_HERO_POSTERS[activePosterIdx].badgeColor} font-mono backdrop-blur-md`}>
+                            {ALL_HERO_POSTERS[activePosterIdx].tag}
+                          </span>
+                          <span className="text-[9px] font-mono text-zinc-400 bg-black/60 px-2 py-0.5 rounded-full border border-white/10">
+                            {activePosterIdx + 1} / {ALL_HERO_POSTERS.length}
+                          </span>
+                        </div>
+
+                        {/* Bottom Title & Nav */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="text-left">
+                              <h4 className="text-xs font-black text-white leading-tight">
+                                {ALL_HERO_POSTERS[activePosterIdx].title}
+                              </h4>
+                              <p className="text-[9px] text-zinc-300 font-mono">Commercial Ad / Graphic Design</p>
+                            </div>
+                            
+                            <a
+                              href="#projects"
+                              className="px-2 py-1 rounded-lg bg-white/20 hover:bg-white text-white hover:text-black text-[9px] font-bold tracking-tight transition-colors backdrop-blur-md whitespace-nowrap"
+                            >
+                              Explore
+                            </a>
+                          </div>
+
+                          {/* Left / Right Nav Arrows */}
+                          <div className="flex items-center justify-between pt-1 border-t border-white/10">
+                            <button
+                              onClick={() => setActivePosterIdx((prev) => (prev - 1 + ALL_HERO_POSTERS.length) % ALL_HERO_POSTERS.length)}
+                              className="p-1 rounded-full bg-black/60 hover:bg-white/20 text-zinc-300 hover:text-white transition-colors border border-white/10"
+                              title="Previous poster"
+                            >
+                              <ChevronLeft className="w-3.5 h-3.5" />
+                            </button>
+
+                            {/* Mini Dots indicator */}
+                            <div className="flex items-center gap-1">
+                              {ALL_HERO_POSTERS.slice(0, 7).map((p, i) => (
+                                <button
+                                  key={p.id}
+                                  onClick={() => setActivePosterIdx(i)}
+                                  className={`h-1.5 rounded-full transition-all ${
+                                    activePosterIdx === i ? 'w-4 bg-white' : 'w-1.5 bg-white/30 hover:bg-white/60'
+                                  }`}
+                                />
+                              ))}
+                            </div>
+
+                            <button
+                              onClick={() => setActivePosterIdx((prev) => (prev + 1) % ALL_HERO_POSTERS.length)}
+                              className="p-1 rounded-full bg-black/60 hover:bg-white/20 text-zinc-300 hover:text-white transition-colors border border-white/10"
+                              title="Next poster"
+                            >
+                              <ChevronRight className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Quick Thumbnail Strip */}
+                    <div className="grid grid-cols-4 gap-1.5">
+                      {ALL_HERO_POSTERS.slice(0, 4).map((poster, pIdx) => (
+                        <button
+                          key={poster.id}
+                          onClick={() => setActivePosterIdx(pIdx)}
+                          className={`relative aspect-square rounded-lg overflow-hidden border transition-all ${
+                            activePosterIdx === pIdx 
+                              ? 'border-white ring-2 ring-white/30 scale-105' 
+                              : 'border-white/10 opacity-60 hover:opacity-100'
+                          }`}
+                        >
+                          <img src={poster.image} alt={poster.title} className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  /* Tab 2: Featured Websites */
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-1 gap-2.5">
+                      <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-white/10 group/poster bg-black shadow-xl">
+                        <img 
+                          src="/src/assets/images/deluxe_furniture_web_showcase_1786758286263.jpg" 
+                          alt="Deluxe Furniture Luxury Web Platform" 
+                          className="w-full h-full object-cover group-hover/poster:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col justify-end p-2.5">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <span className="text-[11px] font-black text-white block">Deluxe Furniture</span>
+                              <span className="text-[9px] text-emerald-300 font-mono">Curated Living & 3D Studio</span>
+                            </div>
+                            <span className="text-[8px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-1.5 py-0.5 rounded-full font-mono">
+                              Gabon St
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-white/10 group/poster bg-black shadow-xl">
+                        <img 
+                          src="/src/assets/images/smash_burgers_web_showcase_1786754143514.jpg" 
+                          alt="Smash Burgers Restaurant Web Platform" 
+                          className="w-full h-full object-cover group-hover/poster:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col justify-end p-2.5">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <span className="text-[11px] font-black text-white block">Smash Burgers</span>
+                              <span className="text-[9px] text-amber-300 font-mono">Artisanal Menu Platform</span>
+                            </div>
+                            <span className="text-[8px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-1.5 py-0.5 rounded-full font-mono">
+                              610 ETB
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Website & Poster Highlights footer strip */}
+                <div className="p-2.5 rounded-2xl bg-black/60 border border-white/5 space-y-1 text-left">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-zinc-400 font-mono text-[11px]">Core Services</span>
-                    <span className="text-emerald-400 text-[11px] font-mono flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3" /> Ready
+                    <span className="text-zinc-400 font-mono text-[10px]">Client Deliverables</span>
+                    <span className="text-emerald-400 text-[10px] font-mono flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" /> Live & Ready
                     </span>
                   </div>
-                  <div className="text-xs font-semibold text-zinc-200 flex items-center justify-between">
-                    <span>Websites • Commercial Posters • Branding</span>
+                  <div className="text-[11px] font-semibold text-zinc-200 flex items-center justify-between">
+                    <span>11 Posters • 2 Websites • Branding</span>
                   </div>
                 </div>
 

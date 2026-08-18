@@ -14,7 +14,11 @@ import {
   Globe,
   Palette,
   Image as ImageIcon,
-  Sparkles
+  Sparkles,
+  Phone,
+  Video,
+  Send as TelegramIcon,
+  MessageCircle
 } from 'lucide-react';
 import { Profile } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -24,10 +28,11 @@ interface ContactSectionProps {
 }
 
 const TOPICS = [
-  { en: "Websites & Web Applications", am: "የድረ-ገጽ ዝግጅት እና ልማት", icon: Globe },
-  { en: "Posters & Commercial Graphics", am: "የፖስተር እና ንግድ ማስታወቂያ ዲዛይን", icon: ImageIcon },
-  { en: "Brand Identity & Visual System", am: "የብራንድ መለያ እና ምስላዊ ስርዓት", icon: Palette },
-  { en: "Full Digital Growth Package", am: "የተሟላ የዲጂታል እድገት ጥቅል", icon: Sparkles }
+  { id: 'website', en: "Custom Website / App", am: "ዘመናዊ ድረ-ገጽ / መተግበሪያ", icon: Globe },
+  { id: 'graphic-poster', en: "Commercial Poster / Ad", am: "የንግድ ፖስተር / ማስታወቂያ", icon: ImageIcon },
+  { id: 'branding', en: "Brand Identity Suite", am: "የብራንድ መለያ እና ሎጎ", icon: Palette },
+  { id: 'video-demo', en: "Website Video / Demo", am: "የድረ-ገጽ ቪዲዮ ማሳያ", icon: Video },
+  { id: 'growth-package', en: "Full Digital Growth Package", am: "የተሟላ የዲጂታል እድገት ጥቅል", icon: Sparkles }
 ];
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
@@ -35,6 +40,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     topicIndex: 0,
     message: ''
   });
@@ -80,9 +86,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
           {/* Left Column: Direct Info & Studio Availability */}
           <div className="lg:col-span-5 space-y-6">
             <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] uppercase tracking-widest font-bold text-zinc-400 font-mono">
-                <Mail className="w-3.5 h-3.5 text-zinc-300" />
-                <span>{t.contactBadge}</span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] uppercase tracking-widest font-bold text-emerald-300 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Step 03 • {t.workflowStep3Title}</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
                 {t.contactTitle}
@@ -92,7 +98,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
               </p>
             </div>
 
-            {/* Quick Cards */}
+            {/* Quick Contact Cards */}
             <div className="space-y-3 pt-2">
               
               {/* Email Copy Card */}
@@ -116,6 +122,56 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                   <span>{copiedEmail ? (isAmharic ? 'ተቀድቷል' : 'Copied') : (isAmharic ? 'ኮፒ' : 'Copy')}</span>
                 </button>
               </div>
+
+              {/* Telegram Card */}
+              {profile.socials.telegram && (
+                <a
+                  href={profile.socials.telegram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  id="contact-telegram-link"
+                  className="p-4 sm:p-5 rounded-2xl bg-zinc-900/40 hover:bg-zinc-800/60 border border-white/5 hover:border-cyan-500/30 backdrop-blur-xl flex items-center justify-between gap-4 shadow-lg transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 group-hover:scale-105 transition-transform">
+                      <TelegramIcon className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] uppercase tracking-widest font-bold font-mono text-zinc-500">Telegram Direct</div>
+                      <div className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors mt-0.5">@vertexdigital00</div>
+                    </div>
+                  </div>
+
+                  <span className="flex items-center gap-1 text-xs font-semibold text-zinc-400 group-hover:text-white transition-colors">
+                    <span>{isAmharic ? 'መልእክት ይላኩ' : 'Chat'}</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </span>
+                </a>
+              )}
+
+              {/* WhatsApp Card */}
+              <a
+                href="https://wa.me/251911000000?text=Hello%20Vertex%20Digital,%20I%20would%20like%20to%20request%20a%20website%20design"
+                target="_blank"
+                rel="noopener noreferrer"
+                id="contact-whatsapp-link"
+                className="p-4 sm:p-5 rounded-2xl bg-zinc-900/40 hover:bg-zinc-800/60 border border-white/5 hover:border-emerald-500/30 backdrop-blur-xl flex items-center justify-between gap-4 shadow-lg transition-all group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 group-hover:scale-105 transition-transform">
+                    <MessageCircle className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-widest font-bold font-mono text-zinc-500">WhatsApp Hotline</div>
+                    <div className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors mt-0.5">+251 911 000 000</div>
+                  </div>
+                </div>
+
+                <span className="flex items-center gap-1 text-xs font-semibold text-zinc-400 group-hover:text-white transition-colors">
+                  <span>{isAmharic ? 'ይደውሉ' : 'Chat'}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </span>
+              </a>
 
               {/* Response Time Guarantee */}
               <div className="p-4 sm:p-5 rounded-2xl bg-zinc-900/40 border border-white/5 backdrop-blur-xl flex items-center gap-3 shadow-lg">
@@ -188,6 +244,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                         setFormData({
                           name: '',
                           email: '',
+                          phone: '',
                           topicIndex: 0,
                           message: ''
                         });
@@ -205,7 +262,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                   >
                     <div className="text-[10px] uppercase tracking-widest font-bold font-mono text-zinc-500 flex items-center gap-2">
                       <MessageSquare className="w-4 h-4 text-zinc-400" />
-                      <span>{isAmharic ? 'የስራ ወይም የፕሮጀክት መልእክት ይላኩ' : 'Send a Project Inquiry'}</span>
+                      <span>{isAmharic ? 'የስራ ወይም የፕሮጀክት መልእክት ይላኩ' : 'Send a Project Inquiry / Request Website'}</span>
                     </div>
 
                     {/* Topic Selection Pills */}
@@ -219,7 +276,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                           const Icon = topic.icon;
                           return (
                             <button
-                              key={idx}
+                              key={topic.id}
                               type="button"
                               onClick={() => setFormData({ ...formData, topicIndex: idx })}
                               className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium text-left transition-all ${
@@ -236,7 +293,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                       </div>
                     </div>
 
-                    {/* Name & Email Row */}
+                    {/* Name & Phone Row */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
                         <label className="text-xs font-medium text-zinc-300">
@@ -254,17 +311,31 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
 
                       <div className="space-y-1.5">
                         <label className="text-xs font-medium text-zinc-300">
-                          {t.contactEmailField} *
+                          {isAmharic ? 'ስልክ ቁጥር (ከተፈለገ)' : 'Phone / WhatsApp (Optional)'}
                         </label>
                         <input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder={isAmharic ? 'የኢሜይል አድራሻ...' : 'alex@company.com'}
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          placeholder={isAmharic ? '+251 9...' : '+1 (555) 000-0000'}
                           className="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/10 focus:border-white/40 text-xs sm:text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none transition-colors"
                         />
                       </div>
+                    </div>
+
+                    {/* Email Row */}
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-medium text-zinc-300">
+                        {t.contactEmailField} *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder={isAmharic ? 'የኢሜይል አድራሻ...' : 'alex@company.com'}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/10 focus:border-white/40 text-xs sm:text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none transition-colors"
+                      />
                     </div>
 
                     {/* Message Box */}
@@ -277,7 +348,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                         rows={4}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        placeholder={isAmharic ? 'ስለሚፈልጉት ድረ-ገጽ፣ ፖስተር ወይም የቪዲዮ ስራ ዝርዝር ይንገሩን...' : 'Describe your website requirements, video editing goals, poster deliverables, or target timeline...'}
+                        placeholder={isAmharic ? 'ስለሚፈልጉት ድረ-ገጽ፣ የንግድ ፖስተር ወይም የብራንድ ስራ ዝርዝር ይንገሩን...' : 'Describe your website requirements, desired features, chosen design style, or budget target...'}
                         className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/10 focus:border-white/40 text-xs sm:text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none transition-colors resize-none leading-relaxed"
                       />
                     </div>

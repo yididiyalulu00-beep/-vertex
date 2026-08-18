@@ -1,8 +1,8 @@
 export type Language = 'en' | 'am';
 
-export type ProjectCategory = 'All' | 'Websites' | 'Posters & Graphics' | 'Branding';
+export type ProjectCategory = 'All' | 'Websites' | 'Branding' | 'Graphic Design' | 'Video';
 
-export type SkillCategory = 'Web Development' | 'Poster & Graphics' | 'Design & Tools' | 'Brand & Strategy';
+export type SkillCategory = 'Web Development' | 'Graphic Design' | 'Design & Tools' | 'Brand & Strategy' | 'Video Editing' | 'Digital Solutions';
 
 export interface SocialLinks {
   github?: string;
@@ -12,6 +12,7 @@ export interface SocialLinks {
   telegram?: string;
   instagram?: string;
   youtube?: string;
+  whatsapp?: string;
   discord?: string;
   blog?: string;
 }
@@ -45,6 +46,7 @@ export interface Profile {
   clientSatisfaction: number;
   email: string;
   phone?: string;
+  whatsapp?: string;
   socials: SocialLinks;
 }
 
@@ -58,16 +60,20 @@ export interface Project {
   descriptionAm?: string;
   detailedOverview?: string;
   detailedOverviewAm?: string;
-  category: 'Websites' | 'Posters & Graphics' | 'Branding';
+  category: 'Websites' | 'Branding' | 'Graphic Design' | 'Video';
   tags: string[];
   techStack: string[];
   image: string;
+  videoUrl?: string;
+  videoDuration?: string;
+  videoPoster?: string;
+  isScreenRecording?: boolean;
+  isUploadedVideo?: boolean;
   gallery?: string[];
   metrics?: Metric[];
   featured: boolean;
   githubUrl?: string;
   liveUrl?: string;
-  videoUrl?: string;
   keyFeatures?: string[];
   keyFeaturesAm?: string[];
   challengesSolved?: string[];

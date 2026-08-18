@@ -9,7 +9,8 @@ import {
   Mail, 
   Phone, 
   FileText,
-  Languages
+  Languages,
+  Send as TelegramIcon
 } from 'lucide-react';
 import { PortfolioData } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -177,6 +178,20 @@ Stack: ${p.techStack.join(', ')}
                   <Mail className="w-3.5 h-3.5 text-zinc-500" />
                   <span>{profile.email}</span>
                 </div>
+                {profile.socials.telegram && (
+                  <>
+                    <span>•</span>
+                    <a 
+                      href={profile.socials.telegram}
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-zinc-400 hover:text-cyan-400 transition-colors"
+                    >
+                      <TelegramIcon className="w-3.5 h-3.5 text-cyan-500" />
+                      <span>@vertexdigital00</span>
+                    </a>
+                  </>
+                )}
                 {profile.phone && (
                   <>
                     <span>•</span>

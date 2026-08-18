@@ -20,7 +20,7 @@ interface SkillsSectionProps {
 
 const CATEGORY_TABS: { key: 'All' | SkillCategory; en: string; am: string }[] = [
   { key: 'All', en: 'All Disciplines', am: 'ሁሉም ዘርፎች' },
-  { key: 'Poster & Graphics', en: 'Poster & Graphics', am: 'የፖስተር እና ግራፊክ ዲዛይን' },
+  { key: 'Graphic Design', en: 'Graphic Design & Posters', am: 'የፖስተር እና ግራፊክ ዲዛይን' },
   { key: 'Web Development', en: 'Web Development', am: 'የድረ-ገጽ ዝግጅት' },
   { key: 'Design & Tools', en: 'Design & Tools', am: 'የዲዛይን ሶፍትዌሮች' },
   { key: 'Brand & Strategy', en: 'Brand & Strategy', am: 'ብራንዲንግ እና ስትራቴጂ' }
@@ -37,7 +37,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills, onSelectSk
 
   const getCategoryIcon = (category: SkillCategory) => {
     switch (category) {
-      case 'Poster & Graphics':
+      case 'Graphic Design':
         return <ImageIcon className="w-4 h-4 text-emerald-400" />;
       case 'Web Development':
         return <Code className="w-4 h-4 text-cyan-400" />;

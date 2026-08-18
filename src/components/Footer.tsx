@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Github, Linkedin, Twitter, Languages } from 'lucide-react';
+import { ArrowUp, Github, Linkedin, Twitter, Languages, Send as TelegramIcon } from 'lucide-react';
 import { Profile } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -51,8 +51,10 @@ export const Footer: React.FC<FooterProps> = ({ profile, onOpenResume }) => {
 
           {/* Nav Links */}
           <div className="flex flex-wrap items-center gap-4 sm:gap-6 font-medium text-zinc-400">
-            <a href="#about" className="hover:text-white transition-colors">{t.navAbout}</a>
+            <a href="#services" className="hover:text-white transition-colors">{isAmharic ? 'አገልግሎቶች' : 'Services'}</a>
             <a href="#projects" className="hover:text-white transition-colors">{t.navProjects}</a>
+            <a href="#why-us" className="hover:text-white transition-colors">{isAmharic ? 'ለምን እኛ?' : 'Why Us'}</a>
+            <a href="#about" className="hover:text-white transition-colors">{t.navAbout}</a>
             <a href="#skills" className="hover:text-white transition-colors">{t.navSkills}</a>
             <button onClick={onOpenResume} className="hover:text-white transition-colors">{t.navResume}</button>
             <a href="#contact" className="hover:text-white transition-colors">{t.navContact}</a>
@@ -68,6 +70,18 @@ export const Footer: React.FC<FooterProps> = ({ profile, onOpenResume }) => {
               <span>{language === 'en' ? 'አማርኛ (AM)' : 'English (EN)'}</span>
             </button>
 
+            {profile.socials.telegram && (
+              <a
+                href={profile.socials.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-white/5 hover:bg-cyan-500/20 text-zinc-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/30 transition-colors"
+                aria-label="Telegram"
+                title="Telegram @vertexdigital00"
+              >
+                <TelegramIcon className="w-4 h-4" />
+              </a>
+            )}
             {profile.socials.github && (
               <a
                 href={profile.socials.github}
