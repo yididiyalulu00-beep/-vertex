@@ -123,6 +123,38 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               )}
             </div>
 
+            {/* Live Website Production Banner if available */}
+            {project.liveUrl && (
+              <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-zinc-900 to-emerald-950/20 border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center flex-shrink-0">
+                    <Globe className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-400">
+                        {isAmharic ? 'የቀጥታ ድረ-ገጽ ተዘርግቷል' : 'Live Production Website'}
+                      </span>
+                    </div>
+                    <p className="text-xs font-mono text-zinc-300 truncate max-w-xs sm:max-w-md">
+                      {project.liveUrl}
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-emerald-400 hover:bg-emerald-300 text-black text-xs font-bold transition-all shadow-md active:scale-95 flex-shrink-0"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>{isAmharic ? 'ድረ-ገጹን ክፈት' : 'Launch Live Website'}</span>
+                </a>
+              </div>
+            )}
+
             {/* Metrics Ribbon */}
             {project.metrics && project.metrics.length > 0 && (
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-5 rounded-2xl bg-white/5 border border-white/5">

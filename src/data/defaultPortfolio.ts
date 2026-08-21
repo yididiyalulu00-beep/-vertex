@@ -51,6 +51,416 @@ export const defaultPortfolio: PortfolioData = {
   },
 
   projects: [
+    // 1. Coffee Theta (Live Website)
+    {
+      id: 'coffee-theta-roastery-web',
+      title: 'Coffee Theta — Artisanal Specialty Cafe & Roastery Platform',
+      titleAm: 'ኮፊ ቴታ — የልዩ ቡና ማፍያ እና ካፌ ድረ-ገጽ',
+      subtitle: 'Single-Origin Roast Catalog, Pour-Over Brew Guide & Cafe Booking',
+      subtitleAm: 'የተመረጡ የቡና ፍሬዎች ካታሎግ፣ የቡና አፈላል መመሪያ እና የጠረጴዛ መያዣ',
+      description:
+        'Specialty third-wave coffee roastery and artisanal cafe web platform. Features interactive single-origin roast selector (Yirgacheffe, Guji, Sidama), pour-over ratio calculator, cafe table reservation engine, and digital order cart.',
+      descriptionAm:
+        'ለልዩ የቡና ማፍያና ካፌ የተሰራ ዘመናዊ ድረ-ገጽ። የተለያዩ የኢትዮጵያ የቡና ፍሬዎችን (ይርጋጨፌ፣ ጉጂ፣ ሲዳማ) በዝርዝር የሚያሳይ፣ የቡና አፈላል መመሪያ፣ የጠረጴዛ ማስያዣ እና የኦንላይን ማዘዣ ያካተተ ነው።',
+      detailedOverview:
+        'Architected a warm, high-converting digital presence for Coffee Theta. Built with rich espresso roast aesthetics, the platform guides coffee enthusiasts through artisanal single-origin flavor profiles, tasting notes (floral jasmine, citrus bergamot, dark cocoa), live pour-over ratio interactive timers, and seamless online table reservation.',
+      detailedOverviewAm:
+        'ለኮፊ ቴታ የተሰራ ማራኪ የቡና መሸጫና ካፌ ድረ-ገጽ። ደንበኞች የተለያየ ጣዕም ያላቸውን የቡና ፍሬዎች እንዲመርጡ፣ ትክክለኛ የቡና አፈላል ጥበብን እንዲማሩ፣ የጠረጴዛ ቀጠሮ እንዲይዙ እና በኦንላይን እንዲያዙ ያስችላል።',
+      category: 'Websites',
+      tags: ['Websites', 'Live Deployment', 'Coffee Roastery', 'Artisanal Cafe', 'Menu Catalog', 'E-Commerce', 'Bilingual EN/AM'],
+      techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Vercel Deployment', 'Framer Motion', 'Responsive UI'],
+      image: '/src/assets/images/coffee_theta_web_1787351829037.jpg',
+      liveUrl: 'https://coffee-theta-kohl.vercel.app/',
+      featured: true,
+      metrics: [
+        { label: 'Roast Profiles', value: '18+' },
+        { label: 'Online Inquiries', value: '+85%' },
+        { label: 'Lighthouse Score', value: '99/100' }
+      ],
+      keyFeatures: [
+        'Single-origin roast catalog with interactive tasting notes and aroma ratings',
+        'Interactive Pour-Over ratio calculator and extraction timer',
+        'Cafe table reservation and event booking system',
+        'Direct delivery hotline and takeaway cart checkout',
+        'Instant 1-click live link to production deployment on Vercel'
+      ],
+      keyFeaturesAm: [
+        'የተለያዩ የቡና አይነቶች ዝርዝር ከጣዕም እና መአዛ ማብራሪያ ጋር',
+        'የቡና አፈላል ስሌት እና የሰዓት ቆጣሪ',
+        'የካፌ ጠረጴዛ ማስያዣ እና የዝግጅት ቦታ መያዣ',
+        'የቀጥታ ስልክ ጥሪ እና የማዘዣ አገልግሎት',
+        'በ Vercel ላይ በቀጥታ የሚሰራ የቀጥታ ድረ-ገጽ'
+      ],
+      challengesSolved: [
+        'Crafted a warm, high-contrast dark theme evoking freshly roasted Arabica beans with instantaneous page loads on mobile.',
+        'Structured modular coffee product cards with scalable tasting note tags and filter attributes.'
+      ],
+      challengesSolvedAm: [
+        'የቡናን ሞቅ ያለ ቀለምና ውበት የሚያሳይ ፈጣን ድረ-ገጽ ተገንብቷል።'
+      ],
+      architecture: 'React -> Coffee Roast Store -> Tasting Engine -> Table Booking -> Vercel Edge'
+    },
+
+    // 2. Wild Coffee (Live Website)
+    {
+      id: 'wild-coffee-heritage-web',
+      title: 'Wild Coffee — Ethiopian Forest-Grown & Single-Origin Export Hub',
+      titleAm: 'ዋይልድ ኮፊ — የኢትዮጵያ የደን ቡና እና የውጭ ንግድ ድረ-ገጽ',
+      subtitle: 'Heritage Arabica Beans, Cupping Score Transparency & Global Shipping',
+      subtitleAm: 'የተፈጥሮ የደን ቡና፣ የጥራት ውጤቶች እና አለም አቀፍ የጭነት ድረ-ገጽ',
+      description:
+        'Editorial digital platform showcasing wild forest-grown Ethiopian Arabica coffee. Highlights highland terroir regions (Kaffa, Bench Maji), Q-grading cupping sheets (88+ score), green bean export lots, and retail subscription packaging.',
+      descriptionAm:
+        'ከተፈጥሮ የኢትዮጵያ ደኖች (ከፋ፣ ቤንች ማጂ) የሚሰበሰብ ጥራት ያለው የቡና ምርትን የሚያስተዋውቅና ለውጭ ገበያ የሚያቀርብ ዘመናዊ ድረ-ገጽ። የጥራት ደረጃዎችን፣ አለም አቀፍ ጭነትን እና የቡና መግዣን ያካተተ ነው።',
+      detailedOverview:
+        'Designed an editorial heritage platform for Wild Coffee, celebrating the birthplace of Arabica in Ethiopia. Integrates traceable farm origins, cupping score transparency, wholesale green bean export inquiry forms, sample request pipelines, and direct consumer retail subscriptions with global shipping calculator.',
+      detailedOverviewAm:
+        'የኢትዮጵያን ጥንታዊ የተፈጥሮ የደን ቡና ለአለም አቀፍ ገበያ የሚያስተዋውቅ ድረ-ገጽ። የቡናው መገኛ ደን፣ የጥራት ውጤት (Cupping Score)፣ የጅምላ ምርት ማዘዣ እና ለአለም አቀፍ ደንበኞች መላኪያ ስርዓትን ያካተተ ነው።',
+      category: 'Websites',
+      tags: ['Websites', 'Live Deployment', 'Ethiopian Coffee', 'Export & Roastery', 'E-Commerce', 'Heritage Brand', 'Sustainable Sourcing'],
+      techStack: ['Next.js / React', 'TypeScript', 'Tailwind CSS', 'Vercel Deployment', 'Interactive Cupping Charts'],
+      image: '/src/assets/images/wild_coffee_web_1787351842459.jpg',
+      liveUrl: 'https://wild-coffe.vercel.app/',
+      featured: true,
+      metrics: [
+        { label: 'Cupping Score', value: '88.5+' },
+        { label: 'Export Inquiries', value: '3.2x' },
+        { label: 'Global Orders', value: 'Active' }
+      ],
+      keyFeatures: [
+        'Highland forest terroir interactive origin map (Kaffa, Bench Maji, Yirgacheffe)',
+        'Transparent Q-Grader cupping score breakdown and flavor radar charts',
+        'Wholesale B2B green coffee export inquiry & sample booking pipeline',
+        'Direct retail bag subscription with worldwide DHL Express tracking',
+        'Live production deployment hosted on Vercel'
+      ],
+      keyFeaturesAm: [
+        'የደን ቡና መገኛ ካርታ (ከፋ፣ ቤንች ማጂ፣ ይርጋጨፌ)',
+        'የቡና የጥራት ውጤቶች ዝርዝር ማሳያ',
+        'ለጅምላ የውጭ ንግድ ደንበኞች የናሙና ማዘዣ ቅጽ',
+        'በቀጥታ ለግል ተጠቃሚዎች የቡና መላኪያ ስርዓት',
+        'በ Vercel ላይ የሚሰራ የቀጥታ ድረ-ገጽ'
+      ],
+      challengesSolved: [
+        'Balanced rich storytelling and heritage photography with high-speed B2B inquiry form responsiveness.',
+        'Constructed custom sensory flavor wheel visual components for coffee cuppers.'
+      ],
+      challengesSolvedAm: [
+        'የቡናን ታሪክ እና ጥራት በአለም አቀፍ ደረጃ በሚያምር አቀራረብ የሚያሳይ ድረ-ገጽ ተገንብቷል።'
+      ],
+      architecture: 'React -> Terroir Map Engine -> Cupping Store -> B2B Export Pipeline -> Vercel Production'
+    },
+
+    // 3. Galaxy Space Tech (Live Website)
+    {
+      id: 'galaxy-space-tech-web',
+      title: 'Galaxy — Deep Space Astronomy & Planetary Exploration Platform',
+      titleAm: 'ጋላክሲ — የጠፈር ምርምር እና የፕላኔቶች ዳሰሳ ድረ-ገጽ',
+      subtitle: 'Cosmic Telemetry, 3D Solar System Visualizer & Celestial Mechanics',
+      subtitleAm: 'የስነ ፈለክ ዳሰሳ፣ የ 3D የጠፈር እይታ እና ሳይንሳዊ መረጃዎች ድረ-ገጽ',
+      description:
+        'Cutting-edge scientific and exploratory astronomy web experience. Features real-time orbital visualization, interactive planetary scale explorer, celestial telemetry readouts, dark cyberpunk glassmorphic UI, and smooth physics particles.',
+      descriptionAm:
+        'ስለ ጠፈር፣ ፕላኔቶች እና ከዋክብት የሚያሳይ ዘመናዊና ማራኪ ድረ-ገጽ። ባለ 3D የፕላኔቶች እንቅስቃሴ፣ የጠፈር ሳይንስ መረጃዎች፣ የሚያበሩ የቀለም ውጤቶች እና ፈጣን አሰራር ያለው ድንቅ ቴክኖሎጂ ነው።',
+      detailedOverview:
+        'Engineered an immersive deep-space exploration portal. Utilizing high-performance canvas particle systems and interactive celestial navigation, visitors can journey through our solar system, analyze planetary composition, telemetry readouts, gravitational physics, and deep-sky nebulae in real-time.',
+      detailedOverviewAm:
+        'ስለ ጠፈር አለም ጥልቅ ምርምርና እውቀት የሚሰጥ ድንቅ ድረ-ገጽ። ፕላኔቶች፣ ከዋክብት፣ ጨረቃዎች እና ጋላክሲዎች እንዴት እንደሚንቀሳቀሱ በ 3D ግራፊክስ እና ፈጣን አሰራር ያሳያል።',
+      category: 'Websites',
+      tags: ['Websites', 'Live Deployment', 'Space Science', '3D Visualizer', 'Interactive Web', 'Dark Mode UI', 'WebGL / Canvas'],
+      techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Canvas Particle Engine', 'Vercel Deployed', 'Audio-Visual Sync'],
+      image: '/src/assets/images/galaxy_space_web_1787351857608.jpg',
+      liveUrl: 'https://galaxy-zeta-six.vercel.app/',
+      featured: true,
+      metrics: [
+        { label: 'Frame Rate', value: '60 FPS' },
+        { label: 'Cosmic Objects', value: '50+' },
+        { label: 'Interactivity', value: 'Full 3D' }
+      ],
+      keyFeatures: [
+        'Interactive 3D planetary scale navigator with realistic orbital physics',
+        'Real-time celestial telemetry charts, atmospheric breakdown, and surface temperatures',
+        'Stunning dark cyberpunk glassmorphic dashboard with neon pulsar glows',
+        'Zero-lag particle starfield canvas rendering at steady 60 FPS',
+        'Live production deployed on Vercel'
+      ],
+      keyFeaturesAm: [
+        'የፕላኔቶች 3D እንቅስቃሴ እና የርቀት መለኪያ',
+        'የከዋክብት የሙቀት እና የከባቢ አየር መረጃዎች',
+        'ጥቁርና የሚያበሩ ቀለማት ያሉት ዘመናዊ ዲዛይን',
+        'በጣም ፈጣን እና ሳቢ የሆኑ የኮምፒውተር ግራፊክስ ስራዎች',
+        'በ Vercel ላይ በቀጥታ የሚሰራ'
+      ],
+      challengesSolved: [
+        'Optimized multi-threaded canvas particle physics to maintain solid 60 FPS across low-power mobile devices.',
+        'Designed mathematical celestial orbital coordinate mapping with fluid pinch-to-zoom.'
+      ],
+      challengesSolvedAm: [
+        'የጠፈር እንቅስቃሴው በማንኛውም ስልክ እና ኮምፒውተር ላይ ሳይቆራረጥ ፈጣን ሆኖ እንዲሰራ ተደርጓል።'
+      ],
+      architecture: 'React -> Canvas Starfield Engine -> Orbital Math Store -> Telemetry Visualizer -> Vercel Edge'
+    },
+
+    // 4. Furnicher Studio (Live Website)
+    {
+      id: 'furnicher-interior-studio-web',
+      title: 'Furnicher — Contemporary Furniture & Architectural Living Catalog',
+      titleAm: 'ፈርኒቸር — የዘመናዊ የቤት እቃዎች እና የዲዛይን ካታሎግ ድረ-ገጽ',
+      subtitle: 'Scandinavian Minimalist Silhouettes, Woodcraft & Room Staging',
+      subtitleAm: 'የስካንዲኔቪያን ቅጥ ያላቸው ሶፋዎች፣ የእንጨት ጠረጴዛዎች እና የክፍል ማስዋቢያ',
+      description:
+        'Modern architectural interior furniture showroom platform. Features bespoke living room collections, curated oak and leather materials, modular sofa builder, instant quote calculator, and showroom appointment scheduling.',
+      descriptionAm:
+        'ለዘመናዊ ቤቶች እና ቢሮዎች የሚሆኑ ውብ የቤት እቃዎችን የሚያሳይ ካታሎግ ድረ-ገጽ። የሶፋዎች፣ የመመገቢያ ጠረጴዛዎች፣ የመኝታ እቃዎች ዝርዝር፣ የዋጋ ማሳያ እና የቀጥታ ማዘዣ ያካተተ ነው።',
+      detailedOverview:
+        'Built a clean, minimalist furniture and interior lifestyle platform for Furnicher. Showcases Scandinavian aesthetics with warm wood textures, modular seating arrangements, curated bedroom and dining suites, material swatch previews, and instant showroom consultation scheduling.',
+      detailedOverviewAm:
+        'ለፈርኒቸር የተሰራ ውብና ዘመናዊ ድረ-ገጽ። ደንበኞች ለሳሎን፣ ለመኝታ ቤት እና ለመመገቢያ ክፍል የሚሆኑ የቤት እቃዎችን በከፍተኛ ጥራት ፎቶዎች፣ የዋጋ ዝርዝር እና የቀጥታ ቀጠሮ መያዣ በቀላሉ እንዲያገኙ ያደርጋል።',
+      category: 'Websites',
+      tags: ['Websites', 'Live Deployment', 'Furniture Showroom', 'Interior Architecture', 'Product Staging', 'E-Commerce'],
+      techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Vercel Deployment', 'Framer Motion', 'Grid Layout'],
+      image: '/src/assets/images/furnicher_store_web_1787351870046.jpg',
+      liveUrl: 'https://furnicher.vercel.app/',
+      featured: true,
+      metrics: [
+        { label: 'Catalog Items', value: '45+' },
+        { label: 'Customer Rating', value: '4.9/5' },
+        { label: 'Mobile Conversion', value: '+62%' }
+      ],
+      keyFeatures: [
+        'Curated Scandinavian furniture collections (Living Room, Dining, Bedroom, Office)',
+        'High-resolution material texture previews (Solid Oak, Bouclé Velvet, Italian Leather)',
+        'Interactive room staging catalog with dimensions and pricing',
+        'Showroom private consultation scheduler & instant inquiry drawer',
+        'Live production deployment hosted on Vercel'
+      ],
+      keyFeaturesAm: [
+        'የተሟላ የቤት እና የቢሮ እቃዎች ካታሎግ',
+        'የእቃዎቹን የጥራት ደረጃና የተሰሩበትን ማቴሪያል በግልጽ የሚያሳይ',
+        'የክፍል ዲዛይን እና የቦታ ስፋት መለኪያ መረጃ',
+        'የቀጥታ ሾውሩም ቀጠሮ መያዣ',
+        'በ Vercel ላይ የሚሰራ የቀጥታ ድረ-ገጽ'
+      ],
+      challengesSolved: [
+        'Engineered responsive grid layouts that adapt seamlessly from ultra-wide 4K architectural monitors to compact smartphones.',
+        'Created smooth scroll snap and micro-animations that highlight craftsmanship details.'
+      ],
+      challengesSolvedAm: [
+        'የቤት እቃዎቹ ፎቶዎች በሞባይልም ሆነ በትልልቅ ስክሪኖች ላይ በጥራት እንዲታዩ ተደርጓል።'
+      ],
+      architecture: 'React -> Catalog Grid Engine -> Material Swatch Hook -> Showroom Booking -> Vercel Edge'
+    },
+
+    // 5. Ethio-Italy (Live Website)
+    {
+      id: 'ethio-italy-hub-web',
+      title: 'Ethio-Italy — Cultural Gastronomy, Tourism & Bilateral Business Hub',
+      titleAm: 'ኢትዮ-ጣሊያን — የባህል፣ ምግብ እና የንግድ ግንኙነት ድረ-ገጽ',
+      subtitle: 'Connecting Addis Ababa & Rome through Culinary Arts, Trade & Travel',
+      subtitleAm: 'አዲስ አበባንና ሮምን በምግብ ጥበብ፣ በቱሪዝም እና በንግድ የሚያገናኝ ድረ-ገጽ',
+      description:
+        'Bilingual cultural and gastronomic bridge platform highlighting the rich historical and culinary heritage between Ethiopia and Italy. Features authentic Italian pasta & espresso pairings alongside Habesha cuisine, event booking, and trade networking directory.',
+      descriptionAm:
+        'የኢትዮጵያ እና የጣሊያንን የረጅም ጊዜ የባህል፣ የምግብና የንግድ ትስስር የሚያሳይ ድረ-ገጽ። ጣፋጭ የጣሊያን ፓስታና ቡና እንዲሁም የኢትዮጵያ ባህላዊ ምግቦች፣ የዝግጅቶች መርሃግብር እና የጉዞ መረጃዎችን ያካተተ ነው።',
+      detailedOverview:
+        'Constructed a bilateral cultural, dining, and tourism nexus platform. Bridges Ethiopian and Italian gastronomy, highlighting historical connections from espresso craft to artisanal pasta, culinary workshops in Addis Ababa, travel itineraries, and commercial business partnership channels.',
+      detailedOverviewAm:
+        'የኢትዮ-ጣሊያንን የባህል፣ የምግብ አዘገጃጀት እና የንግድ ግንኙነት የሚያስተዋውቅ ድረ-ገጽ። በሁለቱ ሀገራት መካከል ያሉ የጋራ ዝግጅቶችን፣ የቱሪዝም መዳረሻዎችን እና የቢዝነስ ትስስሮችን በቀላሉ ያቀርባል።',
+      category: 'Websites',
+      tags: ['Websites', 'Live Deployment', 'Cultural Bridge', 'Gastronomy & Tourism', 'Bilingual Italian/Amharic/English', 'Event Management'],
+      techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Vercel Deployment', 'Bilingual Localization', 'Booking Module'],
+      image: '/src/assets/images/ethio_italy_web_1787351887162.jpg',
+      liveUrl: 'https://ethio-itay.vercel.app/',
+      featured: true,
+      metrics: [
+        { label: 'Cultural Events', value: '24+' },
+        { label: 'Community Hub', value: 'Active' },
+        { label: 'Bilingual', value: 'EN/IT/AM' }
+      ],
+      keyFeatures: [
+        'Culinary heritage showcase comparing Italian espresso and Ethiopian Buna ceremonies',
+        'Bilateral business directory and trade investment networking portal',
+        'Cultural event calendar and masterclass workshop booking system',
+        'Tourism travel guide covering historic destinations and cultural exchanges',
+        'Live production deployment on Vercel'
+      ],
+      keyFeaturesAm: [
+        'የጣሊያን እና የኢትዮጵያ የምግብና የቡና ባህል ማሳያ',
+        'የንግድና ኢንቨስትመንት ትስስር መረጃ',
+        'የባህል ዝግጅቶች እና ስልጠናዎች መርሃግብር',
+        'የቱሪዝም እና የጉዞ መረጃዎች',
+        'በ Vercel ላይ የሚሰራ የቀጥታ ድረ-ገጽ'
+      ],
+      challengesSolved: [
+        'Created a harmonious visual design blending warm Mediterranean terracotta and Ethiopian earth palettes.',
+        'Built multi-language routing ensuring seamless typography for Italian, English, and Amharic Fidel.'
+      ],
+      challengesSolvedAm: [
+        'የሁለቱን ሀገራት ባህል የሚያንፀባርቁ ቀለማትና ጽሑፎች በአንድ ላይ ውብ ሆነው እንዲቀርቡ ተደርጓል።'
+      ],
+      architecture: 'React -> Multi-Language Router -> Event Engine -> Trade Directory -> Vercel Edge'
+    },
+
+    // 6. Samash Burgers (Live Website)
+    {
+      id: 'samash-burgers-platform-web',
+      title: 'Samash (Smash Burgers) — Fast-Casual Dining & Live Ordering Web App',
+      titleAm: 'ሳማሽ (Samash) — የፈጣን በርገር እና የኦንላይን ማዘዣ ድረ-ገጽ',
+      subtitle: 'Sizzling Crust Patties, Secret Sauce Dips, Live Menu & Express Delivery',
+      subtitleAm: 'የተጠበሱ በርገሮች፣ ልዩ ሶሶች፣ የኦንላይን ትዕዛዝ እና ፈጣን ማድረሻ',
+      description:
+        'High-conversion digital restaurant application built for Samash (Smash Burgers). Features dynamic single/double patty customization, real-time cart pricing, delivery address navigator, working hours tracker, and Telebirr/CBE payment channels.',
+      descriptionAm:
+        'ለሳማሽ (Smash Burgers) የተሰራ ዘመናዊ የምግብ ማዘዣ ድረ-ገጽ። ደንበኞች የሚፈልጉትን የበርገር አይነት እንዲመርጡ፣ የሶስ እና ተጨማሪ እቃዎችን እንዲያክሉ፣ ዋጋውን በብር እንዲመለከቱ እና በቀላሉ እንዲያዙ የሚያስችል ነው።',
+      detailedOverview:
+        'Engineered an immersive, high-converting digital storefront for Samash Burgers. Features a high-contrast dark aesthetic with luminous gold accents, instant English and Amharic (አማርኛ) bilingual switching, categorized menu items (Smash Burgers, Signature Dips, Extras & Sides), interactive sizing toggles with live price calculation in ETB, and an integrated Namibia St Google Maps navigator with Plus Code copy support (2Q2M+4H).',
+      detailedOverviewAm:
+        'ለሳማሽ በርገርስ የተሰራ ማራኪና ፈጣን ድረ-ገጽ። ደንበኞች የተለያዩ በርገሮችን (እንደ Malmö Smash እና Loqito Bandito) እንዲመርጡ፣ የነጠላና ድርብ ዋጋን በብር እንዲያዩ፣ በእንግሊዝኛ እና በአማርኛ ቋንቋ እንዲጠቀሙ እንዲሁም በጉግል ካርታ በቀላሉ አድራሻውን እንዲያገኙ ያስችላል።',
+      category: 'Websites',
+      tags: ['Websites', 'Live Deployment', 'Smash Burgers', 'Restaurant App', 'Food Delivery', 'Online Ordering', 'Mobile First'],
+      techStack: ['React 19', 'TypeScript', 'Tailwind CSS', 'Vercel Deployment', 'Cart State Engine', 'Google Maps Plus Code'],
+      image: '/src/assets/images/smash_burgers_web_showcase_1786754143514.jpg',
+      videoUrl: '/src/assets/images/smash_burgers_web_showcase_1786754143514.jpg',
+      videoDuration: '02:10',
+      isScreenRecording: true,
+      liveUrl: 'https://samash.vercel.app/',
+      gallery: [
+        '/src/assets/images/smash_burgers_web_showcase_1786754143514.jpg',
+        '/src/assets/images/smash_burgers_menu_map_1786754157539.jpg'
+      ],
+      featured: true,
+      metrics: [
+        { label: 'Order Speed', value: '< 45s' },
+        { label: 'Mobile Orders', value: '+78%' },
+        { label: 'Payment Options', value: 'Telebirr/CBE' }
+      ],
+      keyFeatures: [
+        'Dynamic Hero showcase with live Open/Closed badge and working hours (11:00 AM - 10:00 PM)',
+        'Full categorized menu (Smash Burgers, Signature Dips, Extras & Sides, Drinks & Refreshments)',
+        'Interactive Single & Double patty toggle with real-time ETB price recalculation',
+        'Namibia St Addis Ababa Google Maps integration with 1-click Plus Code (2Q2M+4H) copy',
+        'Direct call button (0962629663) and Ethiopian payment channels (Cash, Telebirr, CBE Birr)',
+        'Live production deployed on Vercel'
+      ],
+      keyFeaturesAm: [
+        'የቀጥታ የስራ ሰዓት (11:00 AM - 10:00 PM) እና የክፍት/ዝግ ሁኔታ ማሳያ',
+        'የተሟላ የምግብ ዝርዝር (ስማሽ በርገሮች፣ ሶሶች፣ ተጨማሪዎች እና መጠጦች)',
+        'የነጠላ እና ድርብ በርገር መምረጫ ከቀጥታ የዋጋ ስሌት ጋር',
+        'የአዲስ አበባ ናሚቢያ ጎዳና የጉግል ካርታ መገኛ ከፕላስ ኮድ (2Q2M+4H) መገልበጫ ጋር',
+        'የቀጥታ ስልክ ጥሪ (0962629663) እና የክፍያ አማራጮች (ጥሬ ገንዘብ፣ ቴሌብር፣ ሲቢኢ ብር)',
+        'በ Vercel ላይ በቀጥታ የሚሰራ'
+      ],
+      challengesSolved: [
+        'Optimized high-resolution culinary photography loading with zero layout shift on mobile networks in Addis Ababa.',
+        'Integrated bilingual Amharic typography alongside custom Google Maps Plus Code coordinates seamlessly.'
+      ],
+      challengesSolvedAm: [
+        'የምግቦቹ ፎቶዎች በስልክ ላይ በፍጥነት እንዲከፈቱ እና የአማርኛ ጽሑፎች ከካርታው ጋር ተስማምተው እንዲሰሩ ተደርጓል።'
+      ],
+      architecture: 'React 19 -> Category Filter Hook -> ETB Price Engine -> Google Maps Module -> Bilingual Localization -> Vercel Edge'
+    },
+
+    // 7. Delux Silk (Live Website)
+    {
+      id: 'delux-silk-boutique-web',
+      title: 'Delux Silk — Haute Couture, Pure Mulberry Silk & Bridal Boutique',
+      titleAm: 'ደሉክስ ሲልክ — የቅንጦት የሐር አልባሳት እና የሙሽራ ፋሽን ድረ-ገጽ',
+      subtitle: 'Pure Mulberry Silk Gowns, Bespoke Tailoring & Swatch Previews',
+      subtitleAm: 'የተመረጡ የሐር ልብሶች፣ ለሙሽራና ለልዩ ዝግጅት የሚሆኑ አልባሳት ካታሎግ',
+      description:
+        'Luxury fashion atelier storefront dedicated to pure mulberry silk textiles and custom bridal gowns. Features high-resolution drape textures, interactive fabric swatch selector, custom size measurement guide, and bespoke atelier appointments.',
+      descriptionAm:
+        'ከፍተኛ ጥራት ያላቸውን የሐር (Silk) አልባሳት እና የሙሽራ ልብሶችን የሚያቀርብ የቅንጦት ፋሽን ድረ-ገጽ። የተለያዩ ቀለማት፣ የልብስ ስፌት ማዘዣ እና የቀጠሮ መያዣን ያካተተ ነው።',
+      detailedOverview:
+        'Architected an ultra-luxurious editorial boutique for Delux Silk. Designed with champagne gold accents and fluid typography, the platform enables haute couture clients, brides, and stylists to browse hand-crafted silk creations, inspect momme fabric weights, select color swatches, and book private bespoke fittings.',
+      detailedOverviewAm:
+        'ለደሉክስ ሲልክ የተሰራ የቅንጦት የፋሽን ድረ-ገጽ። ደንበኞች የተለያዩ የሐር ልብሶችን፣ የሙሽራ አልባሳትን፣ የጨርቅ አይነቶችን እንዲመርጡና ለግል ልብስ ስፌት ቀጠሮ እንዲይዙ ያስችላል።',
+      category: 'Websites',
+      tags: ['Websites', 'Live Deployment', 'Luxury Silk', 'Haute Couture', 'Bridal & Evening Gowns', 'E-Commerce Atelier', 'Fabric Swatches'],
+      techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Vercel Deployment', 'High-Res Fabric Engine', 'Editorial UI'],
+      image: '/src/assets/images/delux_silk_web_1787351900431.jpg',
+      liveUrl: 'https://delux-silk.vercel.app/',
+      featured: true,
+      metrics: [
+        { label: 'Fabric Grades', value: '100% Silk' },
+        { label: 'Bespoke Orders', value: '+92%' },
+        { label: 'Client Rating', value: '5.0/5' }
+      ],
+      keyFeatures: [
+        'Haute couture silk collection showcase (Bridal, Evening Gowns, Scarves & Fabric Rolls)',
+        'Interactive fabric drape and Momme weight specification selector',
+        'Custom body measurement submission form for bespoke tailoring',
+        'Private VIP atelier fitting appointment scheduler',
+        'Live production deployment on Vercel'
+      ],
+      keyFeaturesAm: [
+        'የቅንጦት የሐር አልባሳት እና የሙሽራ ልብሶች ማሳያ',
+        'የሐር ጨርቅ አይነቶች እና የጥራት ደረጃዎች ዝርዝር',
+        'የግል ልኬት ማስገቢያ ቅጽ ለልብስ ስፌት',
+        'የግል ቀጠሮ መያዣ ስርዓት',
+        'በ Vercel ላይ የሚሰራ የቀጥታ ድረ-ገጽ'
+      ],
+      challengesSolved: [
+        'Captured the shimmering luster of mulberry silk with custom CSS gradient highlights and ultra-smooth zoom previews.',
+        'Created an intuitive bespoke garment sizing guide with real-time inch/cm conversion.'
+      ],
+      challengesSolvedAm: [
+        'የሐሩን ጨርቅ ውበትና ማብረቅረቅ በድረ-ገጹ ላይ በሚገባ እንዲታይ ተደርጓል።'
+      ],
+      architecture: 'React -> Silk Collection Engine -> Swatch State -> VIP Fitting Scheduler -> Vercel Production'
+    },
+
+    // 8. Yegash Heritage Fashion (Live Website)
+    {
+      id: 'yegash-heritage-fashion-web',
+      title: 'Yegash — Ethiopian Heritage Apparel & Modern Habesha Fashion',
+      titleAm: 'የጋሽ — የኢትዮጵያ ባህላዊና ዘመናዊ አልባሳት ድረ-ገጽ',
+      subtitle: 'Hand-Woven Tibeb Patterns, Contemporary Habesha Kemis & Global Shipping',
+      subtitleAm: 'በእጅ የተሸመኑ የጥበብ ልብሶች፣ ዘመናዊ የሀበሻ ቀሚሶች እና አለም አቀፍ ጭነት',
+      description:
+        'Modern Ethiopian fashion boutique celebrating authentic hand-woven heritage textiles. Features curated Habesha Kemis collections, contemporary urban streetwear with traditional Tibeb trims, multi-currency checkout (ETB / USD), and worldwide DHL express dispatch.',
+      descriptionAm:
+        'የኢትዮጵያን ባህላዊ ጥበብ እና ዘመናዊ ፋሽን አጣምሮ የያዘ ድንቅ የልብስ መሸጫ ድረ-ገጽ። ውብ የሀበሻ ቀሚሶች፣ ባህላዊ የወንዶችና የሴቶች ልብሶች፣ በብርና በዶላር ክፍያ እንዲሁም አለም አቀፍ የማድረሻ አገልግሎትን ያካተተ ነው።',
+      detailedOverview:
+        'Constructed a premier cultural fashion e-commerce storefront for Yegash. Combining centuries of traditional Ethiopian hand-loom weaving artistry (Shemma and Tibeb) with modern cosmopolitan silhouettes, the site serves the global Ethiopian diaspora with currency switching (ETB/USD), custom embroidery selection, and worldwide express door-to-door delivery.',
+      detailedOverviewAm:
+        'ለየጋሽ የተሰራ የኢትዮጵያ ባህላዊና ዘመናዊ አልባሳት መሸጫ ድረ-ገጽ። በእጅ የተሸመኑ ውብ የሀበሻ ቀሚሶችን፣ የጥበብ ልብሶችን እና ዘመናዊ ጃኬቶችን ለአገር ውስጥም ሆነ በውጭ አገር ለሚኖሩ ደንበኞች በብር እና በዶላር ክፍያ ያቀርባል።',
+      category: 'Websites',
+      tags: ['Websites', 'Live Deployment', 'Habesha Fashion', 'Ethiopian Heritage', 'Hand-woven Tibeb', 'Global E-Commerce', 'Bilingual EN/AM'],
+      techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Vercel Deployment', 'Multi-Currency Engine', 'DHL Tracking API'],
+      image: '/src/assets/images/yegash_fashion_web_1787351912659.jpg',
+      liveUrl: 'https://yegash.vercel.app/',
+      featured: true,
+      metrics: [
+        { label: 'Handcrafted Lines', value: '30+' },
+        { label: 'Global Delivery', value: 'Worldwide' },
+        { label: 'Cultural Rating', value: '5.0/5' }
+      ],
+      keyFeatures: [
+        'Curated Habesha Kemis, Wedding Gowns, Men\'s Traditional & Modern Streetwear catalogs',
+        'Interactive Tibeb pattern selector and custom artisan embroidery options',
+        'Multi-currency toggle (ETB for domestic Ethiopian buyers, USD for global diaspora)',
+        'Worldwide DHL Express door-to-door shipping calculator and tracking integration',
+        'Live production deployed on Vercel'
+      ],
+      keyFeaturesAm: [
+        'የሀበሻ ቀሚሶች፣ የሰርግ ልብሶች እና የዘመናዊ አልባሳት ካታሎግ',
+        'የተለያዩ የጥበብ ዲዛይን መምረጫዎች',
+        'የብር (ETB) እና የዶላር (USD) መክፈያ አማራጭ',
+        'በ DHL አለም አቀፍ ፈጣን መላኪያ አገልግሎት',
+        'በ Vercel ላይ በቀጥታ የሚሰራ የቀጥታ ድረ-ገጽ'
+      ],
+      challengesSolved: [
+        'Created custom high-DPI zoom views showcasing the intricate hand-woven cotton texture and gold thread Tibeb borders.',
+        'Integrated seamless dual-currency checkout accommodating Ethiopian domestic banking (Telebirr/CBE) and international cards.'
+      ],
+      challengesSolvedAm: [
+        'የእጅ ጥበቡን ዝርዝር መስመሮች በቅርበት የሚያሳይ የፎቶ ጥራት እና የአገር ውስጥም ሆነ የውጭ ክፍያዎችን እንዲቀበል ተደርጓል።'
+      ],
+      architecture: 'React -> Heritage Catalog Engine -> Multi-Currency Store -> Global Shipping -> Vercel Production'
+    },
+
+    // 9. Deluxe Furniture (Existing Website Platform)
     {
       id: 'deluxe-furniture-luxury-web',
       title: 'Deluxe Furniture — Curated Living & 3D Room Studio Platform',
@@ -58,11 +468,11 @@ export const defaultPortfolio: PortfolioData = {
       subtitle: 'Bespoke European Silhouettes & Gabon St Showroom Catalog',
       subtitleAm: 'የተመረጠ ኑሮ፣ የጋቦን ጎዳና ሾውሩም እና ማስተር ካታሎግ ድረ-ገጽ',
       description:
-        'Editorial luxury furniture and interior design web platform built for Deluxe Furniture in Addis Ababa (Gabon St). Features interactive master catalog, 3D Room Studio virtual planner, spotlight collection exhibitions (Palazzo Terra Cotta Dining, Aqua Opus Living Suite), swatch selector, showroom booking, and instant hotline integration (0974 65 65 65).',
+        'Editorial luxury furniture and interior design web platform built for Deluxe Furniture in Addis Ababa (Gabon St). Features interactive master catalog, 3D Room Studio virtual planner, spotlight collection exhibitions, swatch selector, and showroom booking.',
       descriptionAm:
-        'በአዲስ አበባ (ጋቦን ጎዳና) ለሚገኘው ደሉክስ ፈርኒቸር የተሰራ ዘመናዊና ማራኪ ድረ-ገጽ። የ 3D ሩም ስቱዲዮ እቅድ ማውጫ፣ የተሟላ የቤት እቃዎች ካታሎግ፣ የዋጋና የከለር መምረጫ፣ የሾውሩም ቀጠሮ መያዣ እና የቀጥታ ስልክ መስመር (0974 65 65 65) ያካተተ ነው።',
+        'በአዲስ አበባ (ጋቦን ጎዳና) ለሚገኘው ደሉክስ ፈርኒቸር የተሰራ ዘመናዊና ማራኪ ድረ-ገጽ። የ 3D ሩም ስቱዲዮ እቅድ ማውጫ፣ የተሟላ የቤት እቃዎች ካታሎግ፣ የዋጋና የከለር መምረጫ፣ የሾውሩም ቀጠሮ መያዣ እና የቀጥታ ስልክ መስመር ያካተተ ነው።',
       detailedOverview:
-        'Architected a luxury editorial digital storefront for Deluxe Furniture (ደሉክስ - The difference is visible). Styled with warm ivory minimalist aesthetics and high-contrast typography, the site allows affluent homeowners and interior designers in Addis Ababa to explore curated collections (Palazzo Grand Dining at 295k ETB, Aqua Opus Suite at 385k ETB, Nocturne Velvet at 340k ETB), interact with interactive color swatches, view 5-year warranty guarantees, and seamlessly book Gabon St showroom visits.',
+        'Architected a luxury editorial digital storefront for Deluxe Furniture. Styled with warm ivory minimalist aesthetics and high-contrast typography, the site allows affluent homeowners and interior designers in Addis Ababa to explore curated collections, interact with color swatches, view 5-year warranty guarantees, and seamlessly book Gabon St showroom visits.',
       detailedOverviewAm:
         'ለደሉክስ ፈርኒቸር የተሰራ የቅንጦት ድረ-ገጽ። ደንበኞች በጋቦን ጎዳና ሾውሩም የሚገኙ የተለያዩ ሶፋዎች፣ የመመገቢያ ጠረጴዛዎች እና አልጋዎችን በከፍተኛ ጥራት ፎቶዎች፣ ዝርዝር መግለጫዎች እና የዋጋ ዝርዝር በብር (ETB) እንዲመለከቱና በቀላሉ እንዲያዙ ያስችላል።',
       category: 'Websites',
@@ -72,6 +482,7 @@ export const defaultPortfolio: PortfolioData = {
       videoUrl: '/src/assets/images/deluxe_furniture_web_showcase_1786758286263.jpg',
       videoDuration: '01:45',
       isScreenRecording: true,
+      liveUrl: 'https://furnicher.vercel.app/',
       gallery: [
         '/src/assets/images/deluxe_furniture_web_showcase_1786758286263.jpg',
         '/src/assets/images/deluxe_furniture_catalog_grid_1786758305575.jpg'
@@ -84,7 +495,7 @@ export const defaultPortfolio: PortfolioData = {
       ],
       keyFeatures: [
         'Curated Living editorial hero featuring "Palazzo Terra Cotta Dining" with 5-Yr Warranty badge & 4.9/5 rating',
-        'Interactive Master Catalog with tiered pricing (Aqua Opus Suite 385k ETB, Palazzo Dining 295k ETB, Nocturne Set 340k ETB)',
+        'Interactive Master Catalog with tiered pricing (Aqua Opus Suite 385k ETB, Palazzo Dining 295k ETB)',
         '3D Room Studio virtual showroom interactive entry point',
         'Gabon St Showroom appointment booking modal & visit scheduler',
         'Direct luxury hotline click-to-call floating bar (0974 65 65 65)',

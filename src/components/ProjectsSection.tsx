@@ -49,6 +49,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   const { t, isAmharic } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('All');
   const [selectedPosterSub, setSelectedPosterSub] = useState<string>('All');
+  const [selectedWebSub, setSelectedWebSub] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProjectForModal, setSelectedProjectForModal] = useState<Project | null>(null);
   const [selectedProjectForVideo, setSelectedProjectForVideo] = useState<Project | null>(null);
@@ -66,6 +67,27 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
     { key: 'Products', en: 'Luxury & Retail (3)', am: 'ቅንጦት እና ምርቶች (3)' },
   ];
 
+  const websiteSubcategories = [
+    { key: 'All', en: 'All Websites (9)', am: 'ሁሉም ድረ-ገጾች (9)' },
+    { key: 'Coffee', en: 'Coffee & Roasteries (2)', am: 'ቡና እና ካፌ (2)' },
+    { key: 'Dining', en: 'Food & Dining (1)', am: 'ምግብና ሬስቶራንት (1)' },
+    { key: 'Fashion', en: 'Fashion & Silk (2)', am: 'ፋሽን እና አልባሳት (2)' },
+    { key: 'Furniture', en: 'Furniture & Decor (2)', am: 'የቤት እቃዎች (2)' },
+    { key: 'Tech', en: 'Space & Culture (2)', am: 'ሳይንስ እና ባህል (2)' },
+  ];
+
+  // Helper to check website subcategory
+  const matchesWebSub = (project: Project, sub: string) => {
+    if (sub === 'All') return true;
+    const combined = (project.tags.join(' ') + ' ' + project.title + ' ' + project.id).toLowerCase();
+    if (sub === 'Coffee') return combined.includes('coffee') || combined.includes('roastery') || combined.includes('theta');
+    if (sub === 'Dining') return combined.includes('burger') || combined.includes('samash') || combined.includes('dining');
+    if (sub === 'Fashion') return combined.includes('silk') || combined.includes('yegash') || combined.includes('fashion') || combined.includes('kemis');
+    if (sub === 'Furniture') return combined.includes('furniture') || combined.includes('furnicher') || combined.includes('living');
+    if (sub === 'Tech') return combined.includes('galaxy') || combined.includes('space') || combined.includes('italy') || combined.includes('ethio');
+    return true;
+  };
+
   // Helper to check subcategory
   const matchesPosterSub = (project: Project, sub: string) => {
     if (sub === 'All') return true;
@@ -77,7 +99,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
     return true;
   };
 
-  // Filter projects by category, search query, poster subcategory, and external skill filter
+  // Filter projects by category, search query, subcategories, and external skill filter
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
       // Category check
@@ -92,6 +114,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       // Poster subcategory check
       if (selectedCategory === 'Graphic Design' && selectedPosterSub !== 'All') {
         if (!matchesPosterSub(project, selectedPosterSub)) return false;
+      }
+
+      // Website subcategory check
+      if (selectedCategory === 'Websites' && selectedWebSub !== 'All') {
+        if (!matchesWebSub(project, selectedWebSub)) return false;
       }
 
       // External skill filter check
@@ -116,7 +143,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       }
       return true;
     });
-  }, [projects, selectedCategory, selectedPosterSub, searchQuery, activeSkillFilter]);
+  }, [projects, selectedCategory, selectedPosterSub, selectedWebSub, searchQuery, activeSkillFilter]);
 
   const handleOpenVideo = (e: React.MouseEvent, project: Project) => {
     e.stopPropagation();
@@ -294,6 +321,37 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               })}
             </div>
           )}
+
+          {/* Subcategory Pills for Websites */}
+          {(selectedCategory === 'Websites' || selectedCategory === 'All') && (
+            <div className="flex flex-wrap items-center gap-1.5 pt-2">
+              <span className="text-[11px] font-mono text-zinc-400 mr-1.5 uppercase tracking-wider flex items-center gap-1">
+                <Globe className="w-3 h-3 text-emerald-400" />
+                {isAmharic ? 'የድረ-ገጽ አይነቶች:' : 'Live Website Types:'}
+              </span>
+              {websiteSubcategories.map((sub) => {
+                const isWebSelected = selectedWebSub === sub.key;
+                return (
+                  <button
+                    key={sub.key}
+                    onClick={() => {
+                      setSelectedWebSub(sub.key);
+                      if (selectedCategory !== 'Websites') {
+                        setSelectedCategory('Websites');
+                      }
+                    }}
+                    className={`px-3 py-1 rounded-full text-[11px] font-medium font-mono transition-all ${
+                      isWebSelected && selectedCategory === 'Websites'
+                        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold shadow-sm'
+                        : 'bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-zinc-200 border border-white/5'
+                    }`}
+                  >
+                    {isAmharic ? sub.am : sub.en}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Projects Grid */}
@@ -378,7 +436,21 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     </div>
 
                     {/* Quick Action overlay buttons on hover */}
-                    <div className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/50 backdrop-blur-xs z-10 px-4">
+                    <div className="absolute inset-0 flex flex-wrap items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 backdrop-blur-xs z-10 px-4">
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="px-4 py-2.5 rounded-full bg-emerald-400 hover:bg-emerald-300 text-black text-xs font-bold flex items-center gap-1.5 shadow-2xl scale-95 group-hover:scale-100 transition-all active:scale-95"
+                          title="Open live deployed website in new tab"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          <span>{isAmharic ? 'ቀጥታ ድረ-ገጽ' : 'Live Website'}</span>
+                        </a>
+                      )}
+
                       {hasVideo && (
                         <button
                           type="button"
@@ -502,10 +574,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                               href={project.liveUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-1.5 text-zinc-400 hover:text-white hover:bg-white/5 rounded-full transition-colors"
-                              title="Live demo"
+                              className="flex items-center gap-1.5 px-2.5 py-1 text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 rounded-full font-mono text-[10px] font-semibold transition-colors"
+                              title="Launch live website in new tab"
                             >
-                              <ExternalLink className="w-3.5 h-3.5" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                              <span>Live Site</span>
+                              <ExternalLink className="w-3 h-3" />
                             </a>
                           )}
                         </div>
